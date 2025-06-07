@@ -6,12 +6,13 @@
     <script>
         const BASE_URL = "{{ url('/') }}/";
     </script>
-    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href= "{{ url('css/home.css')}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<script src="home.js" defer></script>
+<script src="{{ url('js/home.js')}}" defer></script>
 </head>
   
 <body>
@@ -20,16 +21,16 @@
             <nav class="navbar">
                 <div class="nav-left">
                     <button id="button-menu">
-                        <img id="menu-img" src="media/menu.svg"/>
+                        <img id="menu-img" src="{{ url('img/Media/menu.svg')}}"/>
                     </button>
-                    <img id="logoimg" src="media/YouTube-logo.png"/>
+                    <img id="logoimg" src="{{ url('img/Media/YouTube-logo.png')}}"/>
                 </div>
 
                 <div class="nav-center">
                    <form id="search-form">
                         <input type="text" name="q" placeholder="Cerca" id="search-bar" required>
                         <button type="submit" id="search-button">
-                            <img id="search-icon" src="media/search.svg" alt="Cerca"/>
+                            <img id="search-icon" src="{{ url('img/Media/search.svg')}}" alt="Cerca"/>
                         </button>
                     </form>
 
@@ -49,11 +50,11 @@
                         <h1>Notifiche</h1>
                     </div>
                     <button id="button-profile">
-                        <img id="profpic" src="<?php echo htmlspecialchars($profile_picture); ?>" />
+                        <img id="profpic" src=" " />
                     </button>
                     <div class="personal-menu hidden" >
-                        <img id="profpic-menu" src="<?php echo htmlspecialchars($profile_picture); ?>" />
-                            <h1> Benvenuto <?php echo $username; ?></h1>
+                        <img id="profpic-menu" src=" " />
+                            <h1> Benvenuto </h1>
                         <!-- <button class="menu-button" data-action="change-picture">
                             <p>Cambia immagine profilo</p>
                         </button>
@@ -61,7 +62,7 @@
                             <p>Impostazioni</p>
                         </button> -->
                         <button class="menu-button" data-action="preferences">
-                            <a href="user.php?user=<?php echo urlencode($username); ?>">Il tuo account</a>
+                            <a href="user.php?user= ">Il tuo account</a>
                         </button>
                         <button class="menu-button" data-action="contact">
                             <a href='logout.php'>Log out</a>
@@ -82,7 +83,7 @@
                         <button id="button-home">
                             <div class="sidebar-inside">
                                 <div class="sdbar-ins-img">
-                                <img src="media/home.svg"/>
+                                <img src="{{ url('img/Media/home.svg')}}"/>
                                 </div>
                                 <div class="sdbar-ins-txt" data-section="home">
                                 <p>Home</p>
@@ -107,14 +108,14 @@
                     <h1 data-type="Tu">
                         <!-- TU   (old)-->
                         Sezione Personale
-                        <img data-type="up" class="toggle" src="media/down-arrow.svg">
+                        <img data-type="up" class="toggle" src="{{ url('img/Media/down-arrow.svg')}}">
                     </h1>
 
                     <div class="sidebar-h" data-type="Tu">
                         <button id="buttonPreferiti">
                             <div class="sidebar-inside">
                                 <div class="sdbar-ins-img">
-                                <img src="media/heart_full.svg"/>
+                                <img src="{{ url('img/Media/heart_full.svg')}}"/>
                                 </div>
                                 <div class="sdbar-ins-txt" data-section="Preferiti">
                                 <p>Preferiti</p>
@@ -127,7 +128,7 @@
                         <button id="buttonPlaylist">
                             <div class="sidebar-inside">
                                 <div class="sdbar-ins-img">
-                                <img src="media/library.svg"/>
+                                <img src="{{ url('img/Media/library.svg')}}"/>
                                 </div>
                                 <div class="sdbar-ins-txt" data-section="Playlist">
                                 <p>Playlist Musicale</p>
@@ -161,7 +162,7 @@
                     </div>
                     <h1 data-type="channel">
                         Le tue iscrizioni
-                        <img data-type="up" class="toggle" src="media/down-arrow.svg">
+                        <img data-type="up" class="toggle" src="{{ url('img/Media/down-arrow.svg')}}">
 
                     </h1>
                     <div class="createChannels">
@@ -196,13 +197,13 @@
 
         <div class="mobile-navbar">
             <button id="button-home-mobile">
-                    <img class="svg-white" src="media/home.svg"/>
+                    <img class="svg-white" src="{{ url('img/Media/home.svg')}}"/>
             </button>
                 <button id="button-menu-mobile">
-                    <img class="svg-white" src="media/library.svg"/>
+                    <img class="svg-white" src="{{ url('img/Media/library.svg')}}"/>
                 </button>
             <button id="button-profile-mobile">
-                <img id="pic-nav-mobile" src="<?php echo htmlspecialchars($profile_picture); ?>" />
+                <img id="pic-nav-mobile" src="" />
             </button>
         </div>
 

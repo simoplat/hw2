@@ -19,6 +19,18 @@
         <section class="main_right">
             <form name='signup' method='post'>
                 @csrf
+                @if ($error == 'empty-fields')
+                <section class="error"> Compila tutti i campi</section>
+                @elseif ($error == 'bad_passwords')
+                <section class="error">Le password non corrispondono</section>
+
+                @elseif ( $error == 'username_existing')
+                <section class="error">L'username che hai scelto non è disponibile</section>
+
+                @elseif ( $error == 'email_existing')
+                <section class="error">L'email è già stata usata</section>
+                @endif
+
                 <div class="names">
                     <div class="name">
                         <label for='name'>Nome</label>
@@ -45,14 +57,11 @@
                 <div class="password">
                     <label for='password'>Password</label>
                     <input type='password' name='password' value='{{ old("password") }}'>
-                    @if ($error == 'empty_fields')
-                    @endif
-
                     <div><img src="{{ url('img/Media/close.svg')}}" /><span>Inserisci almeno 8 caratteri</span></div>
                 </div>
                 <div class="confirm_password">
                     <label for='confirm_password'>Conferma Password</label>
-                    <input type='password' name='confirm_password' value='{{ old("conferma") }}'>
+                    <input type='password' name='confirm_password' value='{{ old("confirm_password") }}'>
                     <div><img src="{{ url('img/Media/close.svg')}}" /><span>Le password non coincidono</span></div>
                 </div>
                 <div class="allow">

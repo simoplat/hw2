@@ -13,12 +13,13 @@
 
 <body>
     <div class="logo">
-        <img src="media/YouTube-logo.png">
+        <img src="{{ url('img/Media/YouTube-logo.png')}}">
 
     </div>
     <div class="login">
         <section class="main">
             <h1>Accedi al tuo account</h1>
+            
             <p class="error"> Compilare tutti i campi</p>
             <p class="error">Username o Password errati</p>
             <form name='login' method='post' id="form-login">

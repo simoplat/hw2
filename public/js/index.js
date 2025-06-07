@@ -1,7 +1,7 @@
   const header = document.getElementById('main-header');
   const images = [
-    'Media/welcomeWallpaper.jpg',
-    'Content/profile/pf1Background.jpg',
+    'img/Media/welcomeWallpaper.jpg'
+    // 'img/Content/profile/pf1Background.jpg',
   ];
 
   let index = 0;

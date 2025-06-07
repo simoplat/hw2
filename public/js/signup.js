@@ -1,6 +1,6 @@
 function checkName(event) {
     const input = event.currentTarget;
-    
+
     if (formStatus[input.name] = input.value.length > 0) {
         input.parentNode.classList.remove('errorj');
     } else {
@@ -10,7 +10,7 @@ function checkName(event) {
 
 function checkSurname(event) {
     const input = event.currentTarget;
-    
+
     if (formStatus[input.surname] = input.value.length > 0) {
         input.parentNode.classList.remove('errorj');
     } else {
@@ -18,7 +18,7 @@ function checkSurname(event) {
     }
 }
 
-function jsonCheckUsername(json) {
+/* function jsonCheckUsername(json) {
     // Controllo il campo exists ritornato dal JSON
     if (formStatus.username = !json.exists) {
         document.querySelector('.username').classList.remove('errorj');
@@ -37,36 +37,41 @@ function jsonCheckEmail(json) {
         document.querySelector('.email').classList.add('errorj');
     }
 }
-
-function fetchResponse(response) {
+ */
+/* function fetchResponse(response) {
     if (!response.ok) return null;
     return response.json();
-}
+} */
 
 function checkUsername(event) {
     const input = document.querySelector('.username input');
-
-    if(!/^[a-zA-Z0-9_]{1,15}$/.test(input.value)) {
+    if (!/^[a-zA-Z0-9_]{1,15}$/.test(input.value)) {
         input.parentNode.querySelector('span').textContent = "Sono ammesse lettere, numeri e underscore. Max. 15";
         input.parentNode.classList.add('errorj');
+        console.log(' username sbagliato');
         formStatus.username = false;
-
     } else {
-        fetch("check_username.php?q="+encodeURIComponent(input.value)).then(fetchResponse).then(jsonCheckUsername);
-    }    
+        console.log(' username giusto');
+        input.parentNode.querySelector('span').textContent = "";
+        input.parentNode.classList.remove('errorj');
+        formStatus.username = true;
+    }
 }
 
 function checkEmail(event) {
     const emailInput = document.querySelector('.email input');
-    if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(String(emailInput.value).toLowerCase())) {
+    if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(String(emailInput.value).toLowerCase())) {
         document.querySelector('.email span').textContent = "Email non valida";
         document.querySelector('.email').classList.add('errorj');
         formStatus.email = false;
-
     } else {
-        fetch("check_email.php?q="+encodeURIComponent(String(emailInput.value).toLowerCase())).then(fetchResponse).then(jsonCheckEmail);
+        // rimuovo messaggio e classe se email è valida
+        document.querySelector('.email span').textContent = "";
+        document.querySelector('.email').classList.remove('errorj');
+        formStatus.email = true;
     }
 }
+
 
 function checkPassword(event) {
     const passwordInput = document.querySelector('.password input');
@@ -75,7 +80,6 @@ function checkPassword(event) {
     } else {
         document.querySelector('.password').classList.add('errorj');
     }
-
 }
 
 function checkConfirmPassword(event) {
@@ -98,7 +102,7 @@ function checkSignup(event) {
     }
 }
 
-const formStatus = {'upload': true};
+const formStatus = { 'upload': true };
 document.querySelector('.name input').addEventListener('blur', checkName);
 document.querySelector('.surname input').addEventListener('blur', checkSurname);
 document.querySelector('.username input').addEventListener('blur', checkUsername);
