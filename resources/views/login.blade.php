@@ -20,16 +20,20 @@
         <section class="main">
             <h1>Accedi al tuo account</h1>
             
+            @if($error == 'empty_fields')
             <p class="error"> Compilare tutti i campi</p>
+            @elseif ($error =='wrong')
             <p class="error">Username o Password errati</p>
+            @endif
             <form name='login' method='post' id="form-login">
+                @csrf
                 <div class="username">
-                    <label for='username'>Username</label>
-                    <input type='text' name='username' value=" {{ old("username") }}">
+                    <!-- <label for='username'>Username</label> -->
+                    <input type='text' placeholder="Username" required name='username'  value="{{ old("username") }}">
                 </div>
                 <div class="password">
-                    <label for='password'>Password</label>
-                    <input type='password' name='password'>
+                    <!-- <label for='password'>Password</label> -->
+                    <input type='password' placeholder="Password" required name='password'>
                 </div>
                 <div class="submit-container">
                     <div class="login-btn">

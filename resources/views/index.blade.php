@@ -18,7 +18,7 @@
         <img src="{{ url('img/Media/YouTube-logo_white.png')}}" alt="Logo YouBlog">
       </div>
       <div id="links">
-        <a href="home.php">HOME</a>
+        <a href="{{ url('home') }}">HOME</a>
         <div id="separator"></div>
         <a href="{{ url('register')}}">ISCRIVITI</a>
         <a href="{{ url('login')}}" class="button">ACCEDI</a>
