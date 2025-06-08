@@ -2,6 +2,12 @@
 const buttonMenuLines = document.querySelector('#button-menu');
 const layout = document.querySelector('.central-layout');
 const buttonMenuMobile = document.querySelector('#button-menu-mobile');
+const meta_element = document.querySelector('meta[name="csrf-token"');
+const csrf_token = meta_element.content;
+const BASE_ROOT_URL = '/'; 
+const BASE_IMG_URL = 'img/';
+
+
 
 function toggleMenuSidebar(){
     let sidebarContent = document.querySelector('.left-sidebar');
@@ -458,9 +464,9 @@ function onJsonHomeFeed(json) {
 
         const imgThumbnail = document.createElement('img');
         imgThumbnail.alt = 'Immagine copertina post';
-        imgThumbnail.src = post.percorsoMedia && post.percorsoMedia.trim() !== ''
-            ? post.percorsoMedia
-            : 'Media/placeholder.jpg';
+        imgThumbnail.src = (post.percorsoMedia && post.percorsoMedia.trim() !== '')
+            ? BASE_IMG_URL + post.percorsoMedia
+            : 'img/Media/placeholder.jpg';
         
 
         aThumbnail.appendChild(imgThumbnail);
@@ -475,9 +481,9 @@ function onJsonHomeFeed(json) {
 
         const imgProfile = document.createElement('img');
         imgProfile.alt = 'Immagine profilo canale';
-        imgProfile.src = post.immagine_profilo && post.immagine_profilo.trim() !== ''
-            ? post.immagine_profilo
-            : 'Media/Portrait_Placeholder.png';
+        imgProfile.src = (post.immagine_profilo && post.immagine_profilo.trim() !== '')
+            ? BASE_IMG_URL + post.immagine_profilo
+            : 'img/Media/Portrait_Placeholder.png';
             
         
 
@@ -524,7 +530,7 @@ function onJsonHomeFeed(json) {
 function fetchHomeContent() {
     const navContainer = document.querySelector('.nav-central');
     navContainer.classList.remove('hidden');
-    fetch('fetchHomeContent.php').
+    fetch('fetchHomeContent').
         then(onResponse).then(onJsonHomeFeed);
 
 }

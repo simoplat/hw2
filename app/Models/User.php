@@ -26,6 +26,13 @@ class User extends Model
         return $this->hasOne(ImmagineUtente::class, 'id_utente');
     }
 
+
+    public function followers()
+    {
+        return $this->hasMany(Iscrizione::class, 'seguito_id');
+    }
+
+
     public function preferiti()
     {
         return $this->belongsToMany(Post::class, 'Preferiti', 'id_utente', 'id_post');
