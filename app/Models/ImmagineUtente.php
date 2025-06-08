@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ImmagineUtente extends Model
 {
-    protected $table = 'immaginiUtente';
+    protected $table = 'immaginiutente';
     protected $primaryKey = 'id_utente';
     public $incrementing = false;
 

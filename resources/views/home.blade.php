@@ -44,28 +44,35 @@
                         </section>
                     </button> -->
                     <button id="notify-button">
-                        <img id="notify-pic" src="media/notifications-1.png"/>
+                        <img id="notify-pic" src="{{ url('img/Media/notifications-1.png')}}"/>
                     </button>
                     <div class="notify-menu hidden"  id="notify-btn">
                         <h1>Notifiche</h1>
                     </div>
                     <button id="button-profile">
-                        <img id="profpic" src=" " />
+                            @if ($immagineProfilo)
+                                <img id="profpic" src="{{ url('img/' . $immagineProfilo) }}" alt="Profilo">
+                            @else
+                                <img id="profpic" src="{{ url('img/Media/Portrait_Placeholder.png') }}" alt="Profilo">
+                            @endif
+
+                        
                     </button>
                     <div class="personal-menu hidden" >
-                        <img id="profpic-menu" src=" " />
-                            <h1> Benvenuto </h1>
-                        <!-- <button class="menu-button" data-action="change-picture">
-                            <p>Cambia immagine profilo</p>
-                        </button>
-                        <button class="menu-button" data-action="settings">
-                            <p>Impostazioni</p>
-                        </button> -->
+                        @if ($immagineProfilo)
+                                <img id="profpic-menu" src="{{ url('img/' . $immagineProfilo) }}" alt="Profilo">
+                            @else
+                                <img id="profpic-menu" src="{{ url('img/Media/Portrait_Placeholder.png') }}" alt="Profilo">
+                            @endif
+                            <h1> Benvenuto {{$username}} ! </h1>
+
+ 
+                        
                         <button class="menu-button" data-action="preferences">
                             <a href="user.php?user= ">Il tuo account</a>
                         </button>
                         <button class="menu-button" data-action="contact">
-                            <a href='logout.php'>Log out</a>
+                            <a href='{{url('logout')}}'>Log out</a>
                         </button>
                     </div>
                     

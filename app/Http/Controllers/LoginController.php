@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use Session;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 
 class LoginController extends BaseController
 {
     public function register_form()
     {
-        if (Session::get('user_id ')) {
+        if (Session::get('user_id')) {
             return redirect('home');
         }
         $error = Session::get('error');
@@ -24,7 +24,7 @@ class LoginController extends BaseController
         {
             Session::put('error', 'empty_fields');
             return redirect('register')->withInput();
-        } else if (request(('password')) != request('confirm_password')) {
+        } else if (request('password') != request('confirm_password')) {
             Session::put('error', 'bad_passwords');
             return redirect('register')->withInput();
         } else if (User::where('username', request('username'))->first()) {
@@ -44,9 +44,15 @@ class LoginController extends BaseController
 
         $user->save();
 
-        Session::get('user_id', $user->id);
+        Session::put('user_id', $user->id);
 
         return redirect('home');
+    }
+
+
+    public function logout(){
+        Session::flush();
+        return redirect('index');
     }
 }
 

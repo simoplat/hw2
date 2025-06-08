@@ -20,6 +20,6 @@ Route::get('/index', function () {
 
 
 
-Route::get('home', function() {
-    return view('home');
-});
+Route::get('home', 'App\Http\Controllers\HomeController@list');
+
+Route::get('logout','App\Http\Controllers\LoginController@logout');
