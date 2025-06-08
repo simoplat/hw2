@@ -375,6 +375,11 @@ function onJsonChannels(json) {
 }
 
 function createChannelElement(channel) {
+    // Creo il tag <a>
+    const link = document.createElement('a');
+    link.href = `user/${encodeURIComponent(channel.channelname)}`;
+
+ 
     const sidebarDiv = document.createElement('div');
     sidebarDiv.classList.add('sidebar-h');
     sidebarDiv.setAttribute('data-type', 'channel');
@@ -407,8 +412,14 @@ function createChannelElement(channel) {
 
     button.appendChild(sidebarInside);
     sidebarDiv.appendChild(button);
-    channelDivCreator.appendChild(sidebarDiv);
+
+    // Inserisco il div dentro il <a>
+    link.appendChild(sidebarDiv);
+
+    // Infine metto il <a> dentro il contenitore principale
+    channelDivCreator.appendChild(link);
 }
+
 
 
 function loadchannels(){
@@ -422,7 +433,7 @@ loadchannels();
 //clik su canale
 
 
-document.addEventListener('click', function (event) {
+/* document.addEventListener('click', function (event) {
   const button = event.target.closest('.sidebar-h[data-type="channel"] button');
   if (button) {
     event.preventDefault();
@@ -430,7 +441,7 @@ document.addEventListener('click', function (event) {
     console.log('Canale selezionato:', channelName);
     window.location.href = `user.php?user=${encodeURIComponent(channelName)}`;
   }
-});
+}); */
 
 function onJsonHomeFeed(json) {
     console.log('JSON ricevuto per home feed:', json);

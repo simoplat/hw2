@@ -30,3 +30,4 @@ Route::get('fetchHomeContent', 'App\Http\Controllers\HomeController@getFeed');
 Route::get('fetchCategories', 'App\Http\Controllers\HomeController@fetchCategories');
 Route::get('fetchChannels', 'App\Http\Controllers\HomeController@fetchChannels');
 Route::get('fetchNotification', 'App\Http\Controllers\HomeController@fetchNotification');
+Route::get('user/{username}', 'App\Http\Controllers\UserController@getUserPage');
