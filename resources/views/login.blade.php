@@ -29,11 +29,11 @@
                 @csrf
                 <div class="username">
                     <!-- <label for='username'>Username</label> -->
-                    <input type='text' placeholder="Username" required name='username'  value="{{ old("username") }}">
+                    <input type='text' placeholder="Username"  name='username'  value="{{ old("username") }}">
                 </div>
                 <div class="password">
                     <!-- <label for='password'>Password</label> -->
-                    <input type='password' placeholder="Password" required name='password'>
+                    <input type='password' placeholder="Password" name='password'>
                 </div>
                 <div class="submit-container">
                     <div class="login-btn">
