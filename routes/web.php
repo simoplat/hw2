@@ -14,7 +14,7 @@ Route::get('login', function () {
     return view('login');
 });
 
-Route::get('/index', function () {
+Route::get('index', function () {
     return view('index');
 });
 
@@ -24,4 +24,9 @@ Route::get('logout', 'App\Http\Controllers\LoginController@logout');
 
 
 Route::get('home', 'App\Http\Controllers\HomeController@home');
+
+//API PHP
 Route::get('fetchHomeContent', 'App\Http\Controllers\HomeController@getFeed');
+Route::get('fetchCategories', 'App\Http\Controllers\HomeController@fetchCategories');
+Route::get('fetchChannels', 'App\Http\Controllers\HomeController@fetchChannels');
+Route::get('fetchNotification', 'App\Http\Controllers\HomeController@fetchNotification');

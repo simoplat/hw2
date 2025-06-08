@@ -96,7 +96,7 @@ function toggleNotifyMenu () {
 notifyButton.addEventListener('click', toggleNotifyMenu);
 
 function fetchNotifications() {
-    fetch('fetchNotification.php')
+    fetch('fetchNotification')
         .then(onResponse)
         .then(onJsonNotifications)
 }
@@ -389,9 +389,9 @@ function createChannelElement(channel) {
     const img = document.createElement('img');
     img.classList.add('channel-pic');
     if (channel.immagine_profilo) {
-        img.src = channel.immagine_profilo;
+        img.src = BASE_IMG_URL + channel.immagine_profilo;
     } else {
-        img.src = 'Media/Portrait_Placeholder.png';
+        img.src = BASE_IMG_URL + 'Media/Portrait_Placeholder.png';
     }
     imgDiv.appendChild(img);
 
@@ -413,7 +413,7 @@ function createChannelElement(channel) {
 
 function loadchannels(){
     console.log('Carico i canali');
-    fetch('fetchchannels.php').then(onResponse).then(onJsonChannels);
+    fetch('fetchChannels').then(onResponse).then(onJsonChannels);
 };
 
 loadchannels();
@@ -607,7 +607,7 @@ function filterByCategory(categoria) {
  
 
 function fetchCategories(){
-    fetch('fetchCategories.php')
+    fetch('fetchCategories')
         .then(onResponse)
         .then(onJsonCategories);
 }

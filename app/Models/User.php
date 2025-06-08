@@ -29,8 +29,14 @@ class User extends Model
 
     public function followers()
     {
-        return $this->hasMany(Iscrizione::class, 'seguito_id');
+        return $this->belongsToMany(User::class, 'Iscrizione', 'seguito_id', 'follower_id');
     }
+
+    public function seguiti()
+    {
+        return $this->belongsToMany(User::class, 'Iscrizione', 'follower_id', 'seguito_id');
+    }
+
 
 
     public function preferiti()
