@@ -71,9 +71,11 @@
                         <button class="menu-button" data-action="preferences">
                             <a href="user.php?user= ">Il tuo account</a>
                         </button>
-                        <button class="menu-button" data-action="contact">
-                            <a href='{{url('logout')}}'>Log out</a>
-                        </button>
+                        <a href='{{url('logout')}}'>
+                            <button class="menu-button" data-action="contact">
+                                Log out
+                            </button>
+                        </a>
                     </div>
                     
                 </div>
