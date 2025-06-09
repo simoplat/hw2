@@ -5,17 +5,19 @@ function Onresponse(response) {
 }
 
 function getPostUrl(id_post) {
-    return 'post.php?id_post=' + encodeURIComponent(id_post);
+    return BASE_URL + 'post/' + encodeURIComponent(id_post);
 }
 
 function fetchChannelContent() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const username = urlParams.get('user'); 
+    const channelMeta = document.querySelector('meta[name="channel"]');
+    const channelUser = channelMeta.content;
 
-    let url = 'fetchChannelContent.php';
-    if (username) {
-        url += '?user=' + encodeURIComponent(username);
+    let url = BASE_URL + 'fetchChannelContent';
+    
+    if (channelUser) {
+        url += '/' + encodeURIComponent(channelUser);
     }
+    console.log(url);
 
     fetch(url)
         .then(Onresponse)
@@ -74,14 +76,14 @@ function onJson(json) {
     let profPic = document.getElementById('profile-pic-id');
     if (profPic && json.profilo) {
         profPic.classList.add('profile-pic');
-        profPic.src = json.profilo.immagine_profilo;
+        profPic.src = BASE_URL +'img/' + json.profilo.immagine_profilo;
         profPic.setAttribute('data-type', 'SET');
     }
 
     let coverPhoto = document.getElementById('cover-photo-id');
     if (coverPhoto && json.profilo) {
         coverPhoto.classList.add('cover-photo');
-        coverPhoto.src = json.profilo.immagine_copertina;
+        coverPhoto.src = BASE_URL+ 'img/'+ json.profilo.immagine_copertina;
         coverPhoto.setAttribute('data-type', 'SET');
     }
 

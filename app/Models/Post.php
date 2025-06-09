@@ -24,4 +24,9 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'id_autore');
     }
+
+    public function preferiti()
+    {
+        return $this->hasMany(Preferito::class, 'id_post');
+    }
 }

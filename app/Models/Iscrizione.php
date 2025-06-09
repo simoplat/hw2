@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Iscrizione extends Model
 {
     protected $table = 'iscrizione';
-    public $incrementing = false; // perché non ha colonna "id" classica
+    public $incrementing = false;
     public $timestamps = false;
 
     protected $fillable = ['follower_id', 'seguito_id'];

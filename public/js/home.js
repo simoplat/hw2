@@ -375,7 +375,7 @@ function onJsonChannels(json) {
 }
 
 function createChannelElement(channel) {
-    // Creo il tag <a>
+   
     const link = document.createElement('a');
     link.href = `user/${encodeURIComponent(channel.channelname)}`;
 
@@ -430,18 +430,6 @@ function loadchannels(){
 loadchannels();
 
 
-//clik su canale
-
-
-/* document.addEventListener('click', function (event) {
-  const button = event.target.closest('.sidebar-h[data-type="channel"] button');
-  if (button) {
-    event.preventDefault();
-    const channelName = button.querySelector('p').textContent.trim();
-    console.log('Canale selezionato:', channelName);
-    window.location.href = `user.php?user=${encodeURIComponent(channelName)}`;
-  }
-}); */
 
 function onJsonHomeFeed(json) {
     console.log('JSON ricevuto per home feed:', json);
@@ -470,7 +458,7 @@ function onJsonHomeFeed(json) {
         divThumbnail.classList.add('video-thumbnail');
 
         const aThumbnail = document.createElement('a');
-        aThumbnail.href = `post.php?id_post=${encodeURIComponent(post.id_post)}`;
+        aThumbnail.href = `post/${encodeURIComponent(post.id_post)}`;
         aThumbnail.dataset.id = post.id_post;
 
         const imgThumbnail = document.createElement('img');
@@ -487,7 +475,7 @@ function onJsonHomeFeed(json) {
         divInfo.classList.add('video-info');
 
         const aProfile = document.createElement('a');
-        aProfile.href = `user.php?user=${encodeURIComponent(post.canale)}`;
+        aProfile.href = `user/${encodeURIComponent(post.canale)}`;
         aProfile.dataset.channel = post.canale;
 
         const imgProfile = document.createElement('img');
@@ -506,7 +494,7 @@ function onJsonHomeFeed(json) {
         divChannelInfo.classList.add('video-info-channel');
 
         const aTitle = document.createElement('a');
-        aTitle.href = `post.php?id_post=${encodeURIComponent(post.id_post)}`;
+        aTitle.href = `post/${encodeURIComponent(post.id_post)}`;
         aTitle.dataset.id = post.id_post;
 
         const h1 = document.createElement('h1');
@@ -514,7 +502,7 @@ function onJsonHomeFeed(json) {
         aTitle.appendChild(h1);
 
         const aChannelName = document.createElement('a');
-        aChannelName.href = `user.php?user=${encodeURIComponent(post.canale)}`;
+        aChannelName.href = `user/${encodeURIComponent(post.canale)}`;
         aChannelName.dataset.channel = post.canale;
 
         const p = document.createElement('p');

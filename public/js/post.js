@@ -1,13 +1,13 @@
 function fetchPost() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id_post = urlParams.get('id_post');
+    const postMeta = document.querySelector('meta[name="id_post"]');
+    const id_post = postMeta.content;
 
     if (!id_post) {
         console.error('ID del post mancante nella URL');
         return;
     }
-
-    fetch('fetchPost.php?id_post=' + encodeURIComponent(id_post))
+    let url = BASE_URL + 'fetchPost/' + encodeURIComponent(id_post);
+    fetch(url)
         .then(Onresponse)
         .then(onJson);
 }
@@ -27,7 +27,7 @@ function onJson(json) {
     const cover = document.querySelector('.cover');
     const preferitoBtn = document.querySelector('.preferito-btn');
     const preferitoText = preferitoBtn.querySelector('.btn-text');
-  
+
 
     const heartIcon = document.getElementById('heart-icon');
 
@@ -35,27 +35,27 @@ function onJson(json) {
         preferitoText.textContent = 'Rimuovi dai preferiti';
         preferitoBtn.dataset.set = 'yes';
         if (heartIcon) {
-            heartIcon.src = 'Media/heart_full.svg'; 
-            heartIcon.alt = 'Rimuovi dai preferiti';
+            heartIcon.src = BASE_URL + 'img/Media/heart_full.svg';
+            heartIcon.alt = BASE_URL + 'img/Rimuovi dai preferiti';
         }
     } else {
         preferitoText.textContent = 'Aggiungi ai preferiti';
         preferitoBtn.dataset.set = 'no';
         if (heartIcon) {
-            heartIcon.src = 'Media/heart_empty.svg';
+            heartIcon.src = BASE_URL + 'img/Media/heart_empty.svg';;
             heartIcon.alt = 'Aggiungi ai preferiti';
         }
     }
 
 
-    if(preferitoBtn) preferitoBtn.addEventListener('click',togglePreferito);
+    if (preferitoBtn) preferitoBtn.addEventListener('click', togglePreferito);
 
     if (!postContent || !titleContainer || !authorNameElem || !authorUsernameElem || !author) {
         console.error('Contenitori mancanti nel DOM');
         return;
     }
 
-    // Pulisci contenuti esistenti
+
     postContent.innerHTML = '';
     titleContainer.innerHTML = '';
     cover.innerHTML = '';
@@ -67,27 +67,25 @@ function onJson(json) {
         return;
     }
 
-    // Titolo in alto
     const postTitle = document.createElement('h1');
     postTitle.classList.add('post-title');
     postTitle.textContent = json.title;
     titleContainer.appendChild(postTitle);
 
-    // Aggiorna immagine profilo autore
-    // Ricrea autore come <a> che reindirizza a user.php
-    author.innerHTML = ''; // Pulisci
+
+    author.innerHTML = ''; 
 
     const authorLink = document.createElement('a');
-    authorLink.href = `user.php?user=${encodeURIComponent(json.autore)}`;
+    authorLink.href = BASE_URL + `user/${encodeURIComponent(json.autore)}`;
     authorLink.classList.add('author');
 
-    // Immagine profilo
+
     const profileImage = document.createElement('img');
-    profileImage.src = json.immagine_profilo ? json.immagine_profilo : 'Media/Portrait_Placeholder.png';
+    profileImage.src = json.immagine_profilo ? BASE_URL + 'img/' + json.immagine_profilo : BASE_URL + '/Media/Portrait_Placeholder.png';
     profileImage.alt = `Foto profilo di ${json.name}`;
     profileImage.classList.add('author-img');
 
-    // Info autore
+
     const authorInfo = document.createElement('div');
     authorInfo.classList.add('author-info');
 
@@ -102,13 +100,12 @@ function onJson(json) {
     authorInfo.appendChild(authorName);
     authorInfo.appendChild(authorUsername);
 
-    // Costruzione finale
+
     authorLink.appendChild(profileImage);
     authorLink.appendChild(authorInfo);
     author.appendChild(authorLink);
 
 
-    // Immagine copertina
     const coverImg = document.createElement('img');
     coverImg.alt = 'Immagine copertina post';
     coverImg.classList.add('cover-img');
@@ -116,16 +113,14 @@ function onJson(json) {
     const mediaPath = json.percorsoMedia && json.percorsoMedia.trim() !== '' ? json.percorsoMedia : null;
 
     if (mediaPath) {
-        coverImg.src = mediaPath;
+        coverImg.src = BASE_URL + 'img/' + mediaPath;
 
-        
+
 
         cover.appendChild(coverImg);
     }
-    // NON mostrare nulla se non c'è immagine
+  
 
-
-    // Contenuto del post
     const postDiv = document.createElement('div');
     postDiv.classList.add('post');
 
@@ -211,11 +206,8 @@ function handleCommentSubmit(event) {
 
     const formData = new FormData(commentForm);
 
-    // Prendi id_post dall'URL
-    const params = new URLSearchParams(window.location.search);
-    const postId = params.get('id_post');
 
-    if (postId) {
+    if (id_post) {
         formData.append('id_post', postId);
 
         inviaCommento(formData);
@@ -229,8 +221,8 @@ function inviaCommento(formData) {
         method: 'POST',
         body: formData
     })
-    .then(Onresponse)
-    .then(responseAggiungiCommento)
+        .then(Onresponse)
+        .then(responseAggiungiCommento)
 }
 
 function togglePreferito() {
@@ -263,7 +255,7 @@ function updatePreferitoUI(json) {
     const preferitoIcon = document.getElementById('heart-icon');
 
     console.log('Preferito Button:', preferitoBtn);
-    if(!preferitoBtn || !spanPref) {
+    if (!preferitoBtn || !spanPref) {
         console.error('Preferito non trovato nel DOM');
         return;
     }
@@ -275,7 +267,7 @@ function updatePreferitoUI(json) {
     } else if (json.preferito === false) {
         spanPref.textContent = 'Aggiungi ai preferiti';
         preferitoBtn.dataset.set = 'no';
-        preferitoIcon.src = 'Media/heart_empty.svg';
+        preferitoIcon.src = BASE_URL + 'img/Media/heart_empty.svg';
     }
 
 }

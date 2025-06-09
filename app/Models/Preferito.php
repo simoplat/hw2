@@ -13,4 +13,15 @@ class Preferito extends Model
     public $timestamps = false;
 
     protected $fillable = ['id_utente', 'id_post'];
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class, 'id_post');
+    }
+
+    public function utente()
+    {
+        return $this->belongsTo(User::class, 'id_utente');
+    }
+
 }

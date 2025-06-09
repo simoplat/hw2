@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,3 +32,6 @@ Route::get('fetchCategories', 'App\Http\Controllers\HomeController@fetchCategori
 Route::get('fetchChannels', 'App\Http\Controllers\HomeController@fetchChannels');
 Route::get('fetchNotification', 'App\Http\Controllers\HomeController@fetchNotification');
 Route::get('user/{username}', 'App\Http\Controllers\UserController@getUserPage');
+Route::get('fetchChannelContent/{username}','App\Http\Controllers\UserController@fetchChannelContent');
+Route::get('post/{id_post}',[PostController::class,'index']);
+Route::get('fetchPost/{id_post}',[PostController::class,'fetchPost']);
