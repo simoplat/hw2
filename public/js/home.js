@@ -4,14 +4,14 @@ const layout = document.querySelector('.central-layout');
 const buttonMenuMobile = document.querySelector('#button-menu-mobile');
 const meta_element = document.querySelector('meta[name="csrf-token"');
 const csrf_token = meta_element.content;
-const BASE_ROOT_URL = '/'; 
+const BASE_ROOT_URL = '/';
 const BASE_IMG_URL = 'img/';
 
 
 
-function toggleMenuSidebar(){
+function toggleMenuSidebar() {
     let sidebarContent = document.querySelector('.left-sidebar');
-    
+
     if (sidebarContent.classList.contains('hidden')) {
         sidebarContent.classList.remove('hidden');
         layout.classList.remove('expand');
@@ -35,11 +35,11 @@ if (buttonProfileMobile) {
     buttonProfileMobile.addEventListener('click', toggleProfMenu);
 }
 
-function toggleProfMenu(){
-    
+function toggleProfMenu() {
+
 
     if (personalMenu.classList.contains('hidden')) {
-        if(!notifyMenu.classList.contains('hidden')){
+        if (!notifyMenu.classList.contains('hidden')) {
             notifyMenu.classList.add('hidden');
         }
         personalMenu.classList.remove('hidden');
@@ -56,15 +56,15 @@ buttonProfile.addEventListener('click', toggleProfMenu);
 const mediaQuery = window.matchMedia('(max-width: 750px)');
 
 function MediaChange(parametro) {
-let sidebarContent = document.querySelector('.left-sidebar');
-  if (parametro.matches) {  
-    console.log('media query');
-        
+    let sidebarContent = document.querySelector('.left-sidebar');
+    if (parametro.matches) {
+        console.log('media query');
+
         // Se la sidebar è visibile, fa il toggle e nasconde
         if (!sidebarContent.classList.contains('hidden')) {
             console.log('Faccio il toggle');
             toggleMenuSidebar();
-        } 
+        }
     }
 }
 
@@ -76,7 +76,7 @@ mediaQuery.addEventListener('change', MediaChange);
 const notifyButton = document.querySelector('#notify-button');
 const notifyMenu = document.querySelector('.notify-menu');
 
-function toggleNotifyMenu () {
+function toggleNotifyMenu() {
     if (notifyMenu.classList.contains('hidden')) {
         if (!personalMenu.classList.contains('hidden')) {
             personalMenu.classList.add('hidden');
@@ -142,7 +142,7 @@ function nascontiContenuti(dataType) {
 
     for (let i = 0; i < images.length; i++) {
         const img = images[i];
-        img.addEventListener('click', function() {
+        img.addEventListener('click', function () {
             toggleSidebars(dataType, img);
         });
     }
@@ -177,7 +177,7 @@ nascontiContenuti('channel');
 
 
 
-function onJson(json){
+function onJson(json) {
     console.log('JSON ricevuto');
     // Svuotiamo la libreria
     const contentVIDEOLAYOUT = document.querySelector('.video-layout');
@@ -189,13 +189,13 @@ function onJson(json){
         categorie.querySelector('h1').remove();
     }
 
-    if(json.items.length === 0) {
+    if (json.items.length === 0) {
         let noResult = document.createElement('h1');
         noResult.textContent = 'Nessun risultato trovato';
         contentVIDEOLAYOUT.appendChild(noResult);
     }
     for (let i = 0; i < json.items.length; i++) {
-        
+
         let item = json.items[i];
 
 
@@ -211,7 +211,7 @@ function onJson(json){
 
         let divThumbnail = document.createElement('div');
         divThumbnail.classList.add('video-thumbnail');
-        
+
         let divText = document.createElement('div');
         divText.classList.add('video-info');
 
@@ -219,13 +219,13 @@ function onJson(json){
         let divVideoInfoChannel = document.createElement('div');
         divVideoInfoChannel.classList.add('video-info-channel');
 
-        
+
         let h1 = document.createElement('h1');
-        h1.textContent =item.snippet.title; 
+        h1.textContent = item.snippet.title;
 
         let p = document.createElement('p');
         p.textContent = item.snippet.channelTitle;
-        
+
 
         divVideoInfoChannel.appendChild(h1);
         divVideoInfoChannel.appendChild(p);
@@ -236,7 +236,7 @@ function onJson(json){
         divVideoContent.appendChild(divText);
 
         contentVIDEOLAYOUT.appendChild(divVideoContent);
-        if(contentVIDEOLAYOUT.classList.contains('column')) {
+        if (contentVIDEOLAYOUT.classList.contains('column')) {
             contentVIDEOLAYOUT.classList.remove('column');
         }
     }
@@ -259,10 +259,10 @@ function search(event) {
 
     fetch('youtubeAPI.php', {
         method: 'POST',
-        body: data 
+        body: data
     })
-    .then(onResponse)
-    .then(onJson);
+        .then(onResponse)
+        .then(onJson);
 }
 
 
@@ -282,8 +282,8 @@ function onJsonSpotifyPlaylist(json) {
 
     const h1sInNavCentral = navCentral.querySelectorAll('h1');
     for (let i = 0; i < h1sInNavCentral.length; i++) {
-    h1sInNavCentral[i].remove();
-}
+        h1sInNavCentral[i].remove();
+    }
 
 
     const categorie = document.querySelector('.categorie');
@@ -323,7 +323,7 @@ function onJsonSpotifyPlaylist(json) {
             videoContent.appendChild(divThumbnail);
             videoContent.appendChild(divVideoInfo);
 
-            
+
             contentVIDEOLAYOUT.appendChild(videoContent);
         }
     }
@@ -333,18 +333,16 @@ function onJsonSpotifyPlaylist(json) {
 
 
 
-function playlistSpotify(event)
-{
-  event.preventDefault();
-  console.log('Ho ricevuto il click sul bottone playlist');
+function playlistSpotify(event) {
+    event.preventDefault();
+    console.log('Ho ricevuto il click sul bottone playlist');
     fetch('spotify.php').then(searchResponse).then(onJsonSpotifyPlaylist);
 
 }
 
 
-function searchResponse(response)
-{
- 
+function searchResponse(response) {
+
     console.log('Risposta ricevuta da spotify.php');
     return response.json();
 
@@ -375,11 +373,11 @@ function onJsonChannels(json) {
 }
 
 function createChannelElement(channel) {
-   
+
     const link = document.createElement('a');
     link.href = `user/${encodeURIComponent(channel.channelname)}`;
 
- 
+
     const sidebarDiv = document.createElement('div');
     sidebarDiv.classList.add('sidebar-h');
     sidebarDiv.setAttribute('data-type', 'channel');
@@ -422,7 +420,7 @@ function createChannelElement(channel) {
 
 
 
-function loadchannels(){
+function loadchannels() {
     console.log('Carico i canali');
     fetch('fetchChannels').then(onResponse).then(onJsonChannels);
 };
@@ -466,7 +464,7 @@ function onJsonHomeFeed(json) {
         imgThumbnail.src = (post.percorsoMedia && post.percorsoMedia.trim() !== '')
             ? BASE_IMG_URL + post.percorsoMedia
             : 'img/Media/placeholder.jpg';
-        
+
 
         aThumbnail.appendChild(imgThumbnail);
         divThumbnail.appendChild(aThumbnail);
@@ -483,8 +481,8 @@ function onJsonHomeFeed(json) {
         imgProfile.src = (post.immagine_profilo && post.immagine_profilo.trim() !== '')
             ? BASE_IMG_URL + post.immagine_profilo
             : 'img/Media/Portrait_Placeholder.png';
-            
-        
+
+
 
         imgProfile.classList.add('channel-pic');
         aProfile.appendChild(imgProfile);
@@ -572,7 +570,7 @@ function createCategoryLink(category, container) {
     link.setAttribute('data-categories', category.toLowerCase());
     container.appendChild(link);
 
-    link.addEventListener('click', function() {
+    link.addEventListener('click', function () {
         filterByCategory(category.toLowerCase());
     });
 
@@ -603,9 +601,9 @@ function filterByCategory(categoria) {
 }
 
 
- 
 
-function fetchCategories(){
+
+function fetchCategories() {
     fetch('fetchCategories')
         .then(onResponse)
         .then(onJsonCategories);
@@ -616,7 +614,7 @@ fetchCategories();
 
 
 function fetchPreferiti() {
-    fetch('fetchPreferiti.php')
+    fetch('fetchPreferiti')
         .then(onResponse)
         .then(onJsonPreferiti);
 }
@@ -655,15 +653,15 @@ function onJsonPreferiti(json) {
         divThumbnail.classList.add('video-thumbnail');
 
         const aThumbnail = document.createElement('a');
-        aThumbnail.href = `post.php?id_post=${encodeURIComponent(post.id_post)}`;
+        aThumbnail.href = `post/${encodeURIComponent(post.id_post)}`;
         aThumbnail.dataset.id = post.id_post;
 
         const imgThumbnail = document.createElement('img');
         imgThumbnail.alt = 'Immagine copertina post';
         imgThumbnail.src = post.percorsoMedia && post.percorsoMedia.trim() !== ''
-            ? post.percorsoMedia
-            : 'Media/placeholder.jpg';
-        
+            ? BASE_IMG_URL + post.percorsoMedia
+            : 'img/Media/placeholder.jpg';
+
 
         aThumbnail.appendChild(imgThumbnail);
         divThumbnail.appendChild(aThumbnail);
@@ -674,15 +672,16 @@ function onJsonPreferiti(json) {
 
         // Immagine profilo con <a>
         const aProfile = document.createElement('a');
-        aProfile.href = `user.php?user=${encodeURIComponent(post.autore)}`;
+        aProfile.href = `user/${encodeURIComponent(post.autore.username)}`;
         aProfile.dataset.channel = post.autore;
 
         const imgProfile = document.createElement('img');
         imgProfile.alt = 'Immagine profilo canale';
-        imgProfile.src = post.immagine_profilo && post.immagine_profilo.trim() !== ''
-            ? post.immagine_profilo
-            : 'Media/Portrait_Placeholder.png';
-       
+        imgProfile.src = post.autore.immagine && post.autore.immagine.immagine_profilo.trim() !== ''
+            ? BASE_IMG_URL + post.autore.immagine.immagine_profilo
+            : 'img/Media/Portrait_Placeholder.png';
+
+
         imgProfile.classList.add('channel-pic');
         aProfile.appendChild(imgProfile);
         divInfo.appendChild(aProfile);
@@ -691,7 +690,7 @@ function onJsonPreferiti(json) {
         divChannelInfo.classList.add('video-info-channel');
 
         const aTitle = document.createElement('a');
-        aTitle.href = `post.php?id_post=${encodeURIComponent(post.id_post)}`;
+        aTitle.href = `post/${encodeURIComponent(post.id_post)}`;
         aTitle.dataset.id = post.id_post;
 
         const h1 = document.createElement('h1');
@@ -699,11 +698,11 @@ function onJsonPreferiti(json) {
         aTitle.appendChild(h1);
 
         const aChannelName = document.createElement('a');
-        aChannelName.href = `user.php?user=${encodeURIComponent(post.autore)}`;
+        aChannelName.href = `user/${encodeURIComponent(post.autore.username)}`;
         aChannelName.dataset.channel = post.autore;
 
         const p = document.createElement('p');
-        p.textContent = post.autore || 'Canale sconosciuto';
+        p.textContent = post.autore.username || 'Canale sconosciuto';
         aChannelName.appendChild(p);
 
         divChannelInfo.appendChild(aTitle);

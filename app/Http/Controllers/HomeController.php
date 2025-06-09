@@ -39,7 +39,7 @@ class HomeController extends BaseController
 
         $posts = Post::with([
             'autore:id,username',
-            'autore.immagine' 
+            'autore.immagine'
         ])
             ->whereHas('autore.followers', function ($query) use ($user) {
                 $query->where('follower_id', $user->id);
@@ -98,7 +98,7 @@ class HomeController extends BaseController
 
         $user = User::find(Session::get('user_id'));
 
-        $channels = $user->seguiti() 
+        $channels = $user->seguiti()
             ->leftJoin('ImmaginiUtente as imm', 'users.id', '=', 'imm.id_utente')
             ->orderBy('users.username')
             ->get([
@@ -139,8 +139,29 @@ class HomeController extends BaseController
         ]);
 
 
+    }
+
+    public function fetchPreferiti()
+    {
+        if (!Session::get('user_id')) {
+            return [];
+        }
+
+        $userid = Session::get('user_id');
+
+        $posts = Post::with([
+            'autore.immagine',
+        ])
+            ->whereHas('preferiti', function ($query) use ($userid) {
+                $query->where('id_utente', $userid);
+            })
+            ->orderByDesc('id_post')
+            ->get();
+
+        return $posts;
 
     }
+
 
 
 }

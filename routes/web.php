@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,4 @@ Route::get('user/{username}', 'App\Http\Controllers\UserController@getUserPage')
 Route::get('fetchChannelContent/{username}','App\Http\Controllers\UserController@fetchChannelContent');
 Route::get('post/{id_post}',[PostController::class,'index']);
 Route::get('fetchPost/{id_post}',[PostController::class,'fetchPost']);
+Route::get('fetchPreferiti',[HomeController::class,'fetchPreferiti']);
