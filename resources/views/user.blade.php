@@ -4,9 +4,12 @@
     <link rel="stylesheet" href="{{ url('css/user.css')}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="channel" content="{{ $channel }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
     const BASE_URL = "{{ url('/') }}/";
+    const csrf_token = '{{ csrf_token() }}';
     </script>
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

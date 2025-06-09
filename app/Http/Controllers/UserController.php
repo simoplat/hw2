@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Iscrizione;
+use Illuminate\Support\Facades\Request;
 
 class UserController extends BaseController
 {
@@ -31,21 +32,22 @@ class UserController extends BaseController
         if (!Session::get('user_id')) {
             return redirect('login');
         }
-        
+
 
         $user = User::where('username', $channel)->first();
-        if(!$user) return;
+        if (!$user)
+            return;
 
         // Recupera l'immagine utente (con fallback)
         $immagini = $user->immagine;
 
         // Recupera i post dell’utente con info utente
         $posts = $user->posts()
-        ->with(['autore']) // se necessario per username
-        ->orderByDesc('id_post')
-        ->get()
-        ->map(function ($post) {
-            return [
+            ->with(['autore']) // se necessario per username
+            ->orderByDesc('id_post')
+            ->get()
+            ->map(function ($post) {
+                return [
                     'id_post' => $post->id_post,
                     'id_autore' => $post->id_autore,
                     'title' => $post->title,
@@ -55,8 +57,8 @@ class UserController extends BaseController
                     'username' => $post->user->username ?? '',
                 ];
             });
-            
-            // Profilo con fallback immagine
+
+        // Profilo con fallback immagine
         $profilo = [
             'immagine_profilo' => $immagini->immagine_profilo ?? 'Media/Portrait_Placeholder.png',
             'immagine_copertina' => $immagini->immagine_copertina ?? 'Media/placeholder.jpg',
@@ -70,5 +72,73 @@ class UserController extends BaseController
             'post' => $posts,
         ]);
 
+    }
+
+    public function checkChannel()
+    {
+        if (!Session::get('user_id')) {
+            return redirect('login');
+        }
+
+        $user = User::find(Session::get('user_id'));
+
+        $targetUsername = Request::input('user');
+
+        if (!$targetUsername) {
+            return response()->json(['iscritto' => false]);
+        }
+
+        $targetUser = User::where('username', $targetUsername)->first();
+
+        if (!$targetUser) {
+            return response()->json(['iscritto' => false]);
+        }
+
+        if ($targetUser->id === $user->id) {
+            return response()->json(['iscritto' => 'TeStesso']);
+        }
+
+        $isFollowing = $user->seguiti()->where('users.id', $targetUser->id)->exists();
+
+        return response()->json(['iscritto' => $isFollowing]);
+    }
+
+
+    public function toggleIscritto(Request $request)
+    {
+
+        if (!Session::get('user_id')) {
+            return redirect('login');
+        }
+
+        $user = User::find(Session::get('user_id'));
+
+
+        $targetUsername = $request->input('user');
+        if (!$targetUsername) {
+            return response()->json(['error' => 'Username del canale non fornito'], 400);
+        }
+
+        $targetUser = User::where('username', $targetUsername)->first();
+        if (!$targetUser) {
+            return response()->json(['error' => 'Utente (canale) non trovato'], 404);
+        }
+
+        if ($targetUser->id === $user->id) {
+            return response()->json(['error' => 'Non puoi iscriverti a te stesso'], 400);
+        }
+
+        // Controlla se già iscritto
+        $isIscritto = $user->seguiti()->where('users.id', $targetUser->id)->exists();
+
+        if ($isIscritto) {
+            // Disiscrizione
+            $user->seguiti()->detach($targetUser->id);
+            return response()->json(['iscritto' => false]);
+        } else {
+            // Iscrizione
+            $user->seguiti()->attach($targetUser->id);
+            return response()->json(['iscritto' => true]);
+        }
     }
 }

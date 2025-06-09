@@ -1,3 +1,7 @@
+
+const meta_channel = document.querySelector('meta[name="channel"]');
+const user_channel = meta_channel.content;
+
 function Onresponse(response) {
     console.log('Response received');
     if (!response.ok) return null;
@@ -13,7 +17,7 @@ function fetchChannelContent() {
     const channelUser = channelMeta.content;
 
     let url = BASE_URL + 'fetchChannelContent';
-    
+
     if (channelUser) {
         url += '/' + encodeURIComponent(channelUser);
     }
@@ -76,14 +80,14 @@ function onJson(json) {
     let profPic = document.getElementById('profile-pic-id');
     if (profPic && json.profilo) {
         profPic.classList.add('profile-pic');
-        profPic.src = BASE_URL +'img/' + json.profilo.immagine_profilo;
+        profPic.src = BASE_URL + 'img/' + json.profilo.immagine_profilo;
         profPic.setAttribute('data-type', 'SET');
     }
 
     let coverPhoto = document.getElementById('cover-photo-id');
     if (coverPhoto && json.profilo) {
         coverPhoto.classList.add('cover-photo');
-        coverPhoto.src = BASE_URL+ 'img/'+ json.profilo.immagine_copertina;
+        coverPhoto.src = BASE_URL + 'img/' + json.profilo.immagine_copertina;
         coverPhoto.setAttribute('data-type', 'SET');
     }
 
@@ -107,15 +111,16 @@ if (iscrivitiBtn) {
 }
 
 function toggleIscritto() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const user_channel = urlParams.get('user');
     console.log('TOGGLE id canale: ' + user_channel);
 
     if (user_channel) {
         const formData = new FormData();
         formData.append('user', user_channel);
+        formData.append('_token', csrf_token);
 
-        fetch('toggleIscritto.php', {
+        let url = BASE_URL + 'toggleIscritto';
+
+        fetch(url, {
             method: 'POST',
             body: formData
         })
@@ -129,13 +134,13 @@ function toggleIscritto() {
 
 function updateIscrittoUI(json) {
     const iscrivitiTxt = document.querySelector('.btn-text');
-    if(iscrivitiBtn){
+    if (iscrivitiBtn) {
 
-        if(json.iscritto) {
+        if (json.iscritto) {
             iscrivitiBtn.setAttribute('data-set', 'yes');
             iscrivitiTxt.textContent = 'Disiscriviti dal canale';
-            
-        } else if(json.iscritto === false) {
+
+        } else if (json.iscritto === false) {
             iscrivitiBtn.setAttribute('data-set', 'no');
             iscrivitiTxt.textContent = 'Iscriviti al canale';
         }
@@ -147,18 +152,19 @@ function updateIscrittoUI(json) {
 checkIscritto();
 
 function checkIscritto() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const user_channel = urlParams.get('user');
+    
+
     const formData = new FormData();
     console.log('CHECK id canale: ' + user_channel);
     formData.append('user', user_channel);
-    fetch('check_channel.php', {
+    formData.append('_token', csrf_token);
+    let url = BASE_URL + 'checkChannel';
+
+    fetch(url, {
         method: 'POST',
         body: formData
     }).then(Onresponse).then(handleIscritto);
 }
-
-
 
 
 function handleIscritto(json) {
