@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Iscrizione;
+use Laravel\Pail\ValueObjects\Origin\Console;
 
 class PostController extends BaseController
 {
@@ -37,7 +38,7 @@ class PostController extends BaseController
             return response()->json(['error' => 'ID post non valido'], 400);
         }
 
-        $userid = User::where('username', request('username'))->first();
+        $userid = Session::get('user_id');
 
         $post = Post::with([
             'autore.immagine', // autore con immagine profilo
@@ -51,6 +52,9 @@ class PostController extends BaseController
 
         $autore = $post->autore;
         $immagini = $autore->immagine;
+
+
+
 
         // JSON di risposta
         return response()->json([
