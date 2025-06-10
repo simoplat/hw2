@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Iscrizione;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class UserController extends BaseController
 {
@@ -74,7 +75,7 @@ class UserController extends BaseController
 
     }
 
-    public function checkChannel()
+    public function checkChannel(Request $request)
     {
         if (!Session::get('user_id')) {
             return redirect('login');
@@ -82,7 +83,7 @@ class UserController extends BaseController
 
         $user = User::find(Session::get('user_id'));
 
-        $targetUsername = Request::input('user');
+        $targetUsername = $request->user;
 
         if (!$targetUsername) {
             return response()->json(['iscritto' => false]);
@@ -110,11 +111,12 @@ class UserController extends BaseController
         if (!Session::get('user_id')) {
             return redirect('login');
         }
-
+        
         $user = User::find(Session::get('user_id'));
-
-
-        $targetUsername = $request->input('user');
+        
+        $targetUsername = $request->user;
+        
+       
         if (!$targetUsername) {
             return response()->json(['error' => 'Username del canale non fornito'], 400);
         }
@@ -128,7 +130,7 @@ class UserController extends BaseController
             return response()->json(['error' => 'Non puoi iscriverti a te stesso'], 400);
         }
 
-        // Controlla se già iscritto
+        //già iscritto
         $isIscritto = $user->seguiti()->where('users.id', $targetUser->id)->exists();
 
         if ($isIscritto) {

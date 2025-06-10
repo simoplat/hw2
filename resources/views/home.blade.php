@@ -68,9 +68,11 @@
 
  
                         
-                        <button class="menu-button" data-action="preferences">
-                            <a href="user/{{$username }}">Il tuo account</a>
-                        </button>
+                            <a href="user/{{$username }}">
+                                <button class="menu-button" data-action="preferences">
+                                    Il tuo account
+                                </button>
+                            </a>
                         <a href='{{url('logout')}}'>
                             <button class="menu-button" data-action="contact">
                                 Log out

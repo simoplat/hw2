@@ -114,15 +114,16 @@ function toggleIscritto() {
     console.log('TOGGLE id canale: ' + user_channel);
 
     if (user_channel) {
-        const formData = new FormData();
-        formData.append('user', user_channel);
-        formData.append('_token', csrf_token);
+        const formDataToggle = new FormData();
+        formDataToggle.append('user', user_channel);
+        formDataToggle.append('_token', csrf_token);
+        console.log(formDataToggle);
 
         let url = BASE_URL + 'toggleIscritto';
 
         fetch(url, {
             method: 'POST',
-            body: formData
+            body: formDataToggle
         })
             .then(Onresponse).then(updateIscrittoUI)
     } else {
@@ -154,15 +155,15 @@ checkIscritto();
 function checkIscritto() {
     
 
-    const formData = new FormData();
+    const formDataCheckIscritto = new FormData();
     console.log('CHECK id canale: ' + user_channel);
-    formData.append('user', user_channel);
-    formData.append('_token', csrf_token);
+    formDataCheckIscritto.append('user', user_channel);
+    formDataCheckIscritto.append('_token', csrf_token);
     let url = BASE_URL + 'checkChannel';
 
     fetch(url, {
         method: 'POST',
-        body: formData
+        body: formDataCheckIscritto
     }).then(Onresponse).then(handleIscritto);
 }
 
