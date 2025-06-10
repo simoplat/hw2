@@ -214,7 +214,7 @@
                     <img class="svg-white" src="{{ url('img/Media/library.svg')}}"/>
                 </button>
             <button id="button-profile-mobile">
-                <img id="pic-nav-mobile" src="" />
+                <img id="pic-nav-mobile" src="{{ url('img/' . $immagineProfilo) }}" />
             </button>
         </div>
 

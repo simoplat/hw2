@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commento;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Iscrizione;
 use Laravel\Pail\ValueObjects\Origin\Console;
+use Illuminate\Http\Request;
+
 
 class PostController extends BaseController
 {
@@ -70,6 +73,61 @@ class PostController extends BaseController
             'immagine_copertina' => $immagini->immagine_copertina ?? 'img/Media/placeholder.jpg',
             'preferito' => $post->preferiti->isNotEmpty()
         ]);
+    }
+
+    public function aggiornaCommenti($id_post)
+    {
+
+        if (!Session::get('user_id')) {
+            return redirect('login');
+        }
+
+        $comments = Commento::with([
+            'autore' => function ($query) {
+                $query->select('id', 'username');
+            }
+        ])
+            ->where('id_post', $id_post)
+            ->orderBy('id_commento', 'DESC')
+            ->get(['id_commento', 'id_autore', 'testo']);
+
+
+        $formattedComments = $comments->map(function ($comment) {
+            return [
+                'username' => $comment->autore->username,
+                'testo' => $comment->testo
+            ];
+        });
+
+        return response()->json($formattedComments);
+
+
+    }
+
+
+    public function togglePreferito(Request $request)
+    {
+
+        if (!Session::get('user_id')) {
+            return redirect('login');
+        }
+
+        $user = User::find(Session::get('user_id'));
+
+
+        $postId = $request->id_post;
+
+        $isPreferito = $user->checkPreferito()->where('id_post', $postId)->exists();
+        
+        if ($isPreferito) {
+            // Rimuovi dai preferiti
+            $user->preferiti()->detach($postId);
+            return response()->json(['preferito' => false]);
+        } else {
+            // Aggiungi ai preferiti
+            $user->preferiti()->attach($postId);
+            return response()->json(['preferito' => true]);
+        }
     }
 
 

@@ -43,4 +43,10 @@ class User extends Model
     {
         return $this->belongsToMany(Post::class, 'Preferiti', 'id_utente', 'id_post');
     }
+
+    public function checkPreferito()
+{
+    return $this->hasMany(Preferito::class, 'id_utente', 'id');
+}
+
 }

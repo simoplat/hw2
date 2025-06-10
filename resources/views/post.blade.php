@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Post</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="id_post" content="{{ $id_post }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>
         const BASE_URL = "{{ url('/') }}/";
     </script>

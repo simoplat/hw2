@@ -1,7 +1,11 @@
-function fetchPost() {
-    const postMeta = document.querySelector('meta[name="id_post"]');
-    const id_post = postMeta.content;
+const postMeta = document.querySelector('meta[name="id_post"]');
+const id_post = postMeta.content;
+const meta_element= document.querySelector('meta[name="csrf-token"]');
+const csrf_token = meta_element.content;
 
+if(csrf_token) console.log('valore token'+ csrf_token);
+
+function fetchPost() {
     if (!id_post) {
         console.error('ID del post mancante nella URL');
         return;
@@ -148,14 +152,13 @@ commentForm.addEventListener('submit', handleCommentSubmit);
 const commentSection = document.querySelector('.comments-section');
 
 function aggiornaCommenti() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id_post = urlParams.get('id_post');
-
     if (!id_post) {
         console.error('ID del post mancante nella URL');
         return;
     }
-    fetch('fetchCommenti.php?id_post=' + encodeURIComponent(id_post)).
+    let url = BASE_URL + 'fetchCommenti/' + + encodeURIComponent(id_post);
+
+    fetch(url).
         then(Onresponse).
         then(onJsonCommenti);
 }
@@ -180,7 +183,7 @@ function onJsonCommenti(json) {
 
         const author = document.createElement('a');
         author.classList.add('username');
-        author.href = 'user.php?user=' + encodeURIComponent(commento.username);
+        author.href = BASE_URL + 'user/' + encodeURIComponent(commento.username);
         author.textContent = '@' + commento.username + ':';
 
         p.appendChild(author);
@@ -226,17 +229,18 @@ function inviaCommento(formData) {
 }
 
 function togglePreferito() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id_post = urlParams.get('id_post');
-    console.log('TOGGLE id POST: ' + id_post);
+    console.log('TOGGLE id_POST: ' + id_post);
 
     if (id_post) {
-        const formData = new FormData();
-        formData.append('id_post', id_post);
+        const formDataPreferito = new FormData();
+        formDataPreferito.append('id_post', id_post);
+        formDataPreferito.append('_token', csrf_token);
 
-        fetch('togglePreferito.php', {
+        let Prefurl = BASE_URL + 'togglePreferito';
+
+        fetch(Prefurl, {
             method: 'POST',
-            body: formData
+            body: formDataPreferito
         })
             .then(Onresponse).then(updatePreferitoUI)
     } else {
@@ -263,7 +267,7 @@ function updatePreferitoUI(json) {
     if (json.preferito === true) {
         spanPref.textContent = 'Rimuovi dai preferiti';
         preferitoBtn.dataset.set = 'yes';
-        preferitoIcon.src = 'Media/heart_full.svg';
+        preferitoIcon.src = BASE_URL + 'img/Media/heart_full.svg';
     } else if (json.preferito === false) {
         spanPref.textContent = 'Aggiungi ai preferiti';
         preferitoBtn.dataset.set = 'no';

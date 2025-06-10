@@ -41,8 +41,9 @@ Route::get('fetchPost/{id_post}',[PostController::class,'fetchPost']);
 Route::get('fetchPreferiti',[HomeController::class,'fetchPreferiti']);
 Route::post('checkChannel',[UserController::class,'checkChannel']);
 Route::post('toggleIscritto',[UserController::class,'toggleIscritto']);
+Route::get('fetchCommenti/{id_post}',[PostController::class,'aggiornaCommenti']);
+Route::post('togglePreferito',[PostController::class,'togglePreferito']);
 
 //aggiungere toggle preferito
-//toggle iscritto
 //commenti
 //API
