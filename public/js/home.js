@@ -257,7 +257,7 @@ function search(event) {
     const form = document.querySelector('#search-form');
     const data = new FormData(form);
 
-    fetch('youtubeAPI.php', {
+    fetch('youtubeAPI', {
         method: 'POST',
         body: data
     })
@@ -336,7 +336,7 @@ function onJsonSpotifyPlaylist(json) {
 function playlistSpotify(event) {
     event.preventDefault();
     console.log('Ho ricevuto il click sul bottone playlist');
-    fetch('spotify.php').then(searchResponse).then(onJsonSpotifyPlaylist);
+    fetch('spotify').then(searchResponse).then(onJsonSpotifyPlaylist);
 
 }
 

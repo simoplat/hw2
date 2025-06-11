@@ -28,10 +28,11 @@
 
                 <div class="nav-center">
                    <form id="search-form">
-                        <input type="text" name="q" placeholder="Cerca" id="search-bar" required>
-                        <button type="submit" id="search-button">
-                            <img id="search-icon" src="{{ url('img/Media/search.svg')}}" alt="Cerca"/>
+                       <input type="text" name="q" placeholder="Cerca" id="search-bar" required>
+                       <button type="submit" id="search-button">
+                           <img id="search-icon" src="{{ url('img/Media/search.svg')}}" alt="Cerca"/>
                         </button>
+                        <input type='hidden' name='_token' value="{{ csrf_token() }}">
                     </form>
 
                 </div>

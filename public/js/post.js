@@ -1,9 +1,9 @@
 const postMeta = document.querySelector('meta[name="id_post"]');
 const id_post = postMeta.content;
-const meta_element= document.querySelector('meta[name="csrf-token"]');
+const meta_element = document.querySelector('meta[name="csrf-token"]');
 const csrf_token = meta_element.content;
 
-if(csrf_token) console.log('valore token'+ csrf_token);
+if (csrf_token) console.log('valore token' + csrf_token);
 
 function fetchPost() {
     if (!id_post) {
@@ -77,7 +77,7 @@ function onJson(json) {
     titleContainer.appendChild(postTitle);
 
 
-    author.innerHTML = ''; 
+    author.innerHTML = '';
 
     const authorLink = document.createElement('a');
     authorLink.href = BASE_URL + `user/${encodeURIComponent(json.autore)}`;
@@ -123,7 +123,7 @@ function onJson(json) {
 
         cover.appendChild(coverImg);
     }
-  
+
 
     const postDiv = document.createElement('div');
     postDiv.classList.add('post');
@@ -211,22 +211,20 @@ function handleCommentSubmit(event) {
 
 
     if (id_post) {
-        formData.append('id_post', postId);
-
-        inviaCommento(formData);
+        formData.append('id_post', id_post);
+        formData.append('_token', csrf_token);
+        let url = BASE_URL + 'aggiungiCommento';
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(Onresponse)
+            .then(responseAggiungiCommento)
     } else {
         console.error("ID post non trovato nell'URL");
     }
 }
 
-function inviaCommento(formData) {
-    fetch('aggiungiCommento.php', {
-        method: 'POST',
-        body: formData
-    })
-        .then(Onresponse)
-        .then(responseAggiungiCommento)
-}
 
 function togglePreferito() {
     console.log('TOGGLE id_POST: ' + id_post);

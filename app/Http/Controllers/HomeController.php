@@ -15,7 +15,7 @@ class HomeController extends BaseController
 
     public function home()
     {
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return redirect('login');
         }
 
@@ -31,7 +31,7 @@ class HomeController extends BaseController
     public function getFeed()
     {
 
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return [];
         }
 
@@ -64,7 +64,7 @@ class HomeController extends BaseController
     public function fetchCategories()
     {
 
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return [];
         }
 
@@ -92,7 +92,7 @@ class HomeController extends BaseController
 
     public function fetchChannels()
     {
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return [];
         }
 
@@ -125,7 +125,7 @@ class HomeController extends BaseController
 
     public function fetchNotification()
     {
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return [];
         }
 
@@ -143,7 +143,7 @@ class HomeController extends BaseController
 
     public function fetchPreferiti()
     {
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return [];
         }
 

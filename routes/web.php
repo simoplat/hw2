@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -30,6 +31,7 @@ Route::get('logout', 'App\Http\Controllers\LoginController@logout');
 Route::get('home', 'App\Http\Controllers\HomeController@home');
 
 //API PHP
+//GET
 Route::get('fetchHomeContent', 'App\Http\Controllers\HomeController@getFeed');
 Route::get('fetchCategories', 'App\Http\Controllers\HomeController@fetchCategories');
 Route::get('fetchChannels', 'App\Http\Controllers\HomeController@fetchChannels');
@@ -39,11 +41,14 @@ Route::get('fetchChannelContent/{username}','App\Http\Controllers\UserController
 Route::get('post/{id_post}',[PostController::class,'index']);
 Route::get('fetchPost/{id_post}',[PostController::class,'fetchPost']);
 Route::get('fetchPreferiti',[HomeController::class,'fetchPreferiti']);
+Route::get('fetchCommenti/{id_post}',[PostController::class,'aggiornaCommenti']);
+Route::get('spotify',[ApiController::class,'spotifyAPI']);
+Route::post('youtubeAPI',[ApiController::class,'youtubeAPI']);
+//POST
 Route::post('checkChannel',[UserController::class,'checkChannel']);
 Route::post('toggleIscritto',[UserController::class,'toggleIscritto']);
-Route::get('fetchCommenti/{id_post}',[PostController::class,'aggiornaCommenti']);
 Route::post('togglePreferito',[PostController::class,'togglePreferito']);
+Route::post('aggiungiCommento',[PostController::class,'aggiungiCommento']);
 
-//aggiungere toggle preferito
-//commenti
+
 //API

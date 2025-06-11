@@ -16,7 +16,7 @@ class UserController extends BaseController
     public function getUserPage($username)
     {
 
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return redirect('login');
         }
 
@@ -30,7 +30,7 @@ class UserController extends BaseController
     public function fetchChannelContent($channel)
     {
 
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return redirect('login');
         }
 
@@ -77,7 +77,7 @@ class UserController extends BaseController
 
     public function checkChannel(Request $request)
     {
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return redirect('login');
         }
 
@@ -108,7 +108,7 @@ class UserController extends BaseController
     public function toggleIscritto(Request $request)
     {
 
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return redirect('login');
         }
         

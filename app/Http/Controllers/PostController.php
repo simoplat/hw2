@@ -18,7 +18,7 @@ class PostController extends BaseController
     public function index($id_post)
     {
 
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return redirect('login');
         }
 
@@ -32,7 +32,7 @@ class PostController extends BaseController
     public function fetchPost($id_post)
     {
 
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return redirect('login');
         }
 
@@ -78,7 +78,7 @@ class PostController extends BaseController
     public function aggiornaCommenti($id_post)
     {
 
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return redirect('login');
         }
 
@@ -108,7 +108,7 @@ class PostController extends BaseController
     public function togglePreferito(Request $request)
     {
 
-        if (!Session::get('user_id')) {
+        if (!session('user_id')) {
             return redirect('login');
         }
 
@@ -128,6 +128,23 @@ class PostController extends BaseController
             $user->preferiti()->attach($postId);
             return response()->json(['preferito' => true]);
         }
+    }
+
+    public function aggiungiCommento(Request $request){
+
+         if (!session('user_id')) {
+            return redirect('login');
+        }
+
+        $user = User::find(Session::get('user_id'));
+
+        $commento = new Commento();
+        $commento->id_autore = $user->id;
+        $commento->id_post = $request->id_post;
+        $commento->testo = $request->commento;
+        $commento->save();
+        return response()->json(['success'=> true]);
+        
     }
 
 
