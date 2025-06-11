@@ -884,3 +884,7 @@ footer:hover {
 .createChannels a{
   text-decoration: none;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}

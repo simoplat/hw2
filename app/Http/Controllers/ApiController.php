@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-
+use App\Models\User;
+use App\Models\Post;
 
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\EncodedHtmlString;
 
 
 
@@ -76,12 +76,50 @@ class ApiController extends BaseController
     }
 
 
-    public function doSomething()
+    public function dbAction(Request $request)
     {
         if (!session("user_id")) {
             return redirect("login");
         }
 
+        $title = $request->title;
+        $channel = $request->channel;
+        $wallpaper = $request->wallpaper;
+        $description = $request->description;
+
+
+        // Check if user already exists
+        $user = User::where('username', $channel)->first();
+        if (!$user) {
+            $user = new User;
+            $user->username = $channel;
+            $user->password = 'password';
+            $user->email = 'email';
+            $user->name = $channel;
+            $user->surname = 'surname';
+            $user->save();
+        }
+
+        // Check if post already exists for this user with the same title
+        $post = Post::where('title', $title)
+                ->where('id_autore', $user->id)
+                ->first();
+
+        if (!$post) {
+            $post = new Post;
+            $post->title = $title;
+            $post->contenuto = $description;
+            $post->percorsoMedia = $wallpaper;
+            $post->categoria = 'Caricamenti';
+            $post->id_autore = $user->id;
+            $post->save();
+        }
+
+
+        // Use the correct primary key field for Post
+        return redirect()->route('post.show', ['id_post' => $post->id ?? $post->id_post]);
+        
     }
+
 
 }

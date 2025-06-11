@@ -177,7 +177,7 @@ nascontiContenuti('channel');
 
 
 
-function onJson(json) {
+function onJsonYoutube(json) {
     console.log('JSON ricevuto');
     // Svuotiamo la libreria
     const contentVIDEOLAYOUT = document.querySelector('.video-layout');
@@ -208,6 +208,19 @@ function onJson(json) {
 
         let divVideoContent = document.createElement('div');
         divVideoContent.classList.add('video-content');
+        divVideoContent.classList.add('cursor-pointer');
+        let title = item.snippet.title;
+        let channel = item.snippet.channelTitle;
+        let wallpaper = item.snippet.thumbnails.high.url;
+        let description = item.snippet.description;
+        divVideoContent.setAttribute('data-title', title);
+        divVideoContent.setAttribute('data-channel', channel);
+        divVideoContent.setAttribute('data-wallpaper', wallpaper);
+        divVideoContent.setAttribute('data-description', description);
+        divVideoContent.addEventListener('click', function() {
+            dataBaseAction(title, channel, wallpaper, description);
+        });
+
 
         let divThumbnail = document.createElement('div');
         divThumbnail.classList.add('video-thumbnail');
@@ -243,6 +256,28 @@ function onJson(json) {
 }
 
 
+function dataBaseAction(title, channel, wallpaper, description) {
+    console.log('Azione del database con i seguenti dati:' + title + ', ' + channel + ', ' + wallpaper + ', ' + description);
+    const data = new FormData();
+    data.append('title', title);
+    data.append('channel', channel);
+    data.append('wallpaper', wallpaper);
+    data.append('description', description);
+    data.append('_token', csrf_token);
+    fetch('dataBaseAction',
+        {
+            method: 'POST',
+            body: data
+        })
+        .then(onResponse).then(onJsonDBAction);
+
+}
+
+function onJsonDBAction(json) {
+    if(json.success) {
+        console.log('Tutto ok');
+    }
+}
 
 function onResponse(response) {
     console.log('Risposta ricevuta');
@@ -262,7 +297,7 @@ function search(event) {
         body: data
     })
         .then(onResponse)
-        .then(onJson);
+        .then(onJsonYoutube);
 }
 
 
