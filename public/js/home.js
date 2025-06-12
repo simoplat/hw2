@@ -745,8 +745,8 @@ function onJsonPreferiti(json) {
             ? BASE_IMG_URL + post.autore.immagine.immagine_profilo
             : 'img/Media/Portrait_Placeholder.png';
 
-        if (post.categoria.toLowerCase() === 'caricamenti') {
-            imgProfile.src = post.autore.immagine.immagine_profilo;
+        if (post.categoria.toLowerCase() === 'caricamenti' || (post.autore.immagine && post.autore.immagine.immagine_profilo)) {
+            imgProfile.src = post.autore.immagine ? post.autore.immagine.immagine_profilo : imgProfile.src;
         }
 
 
