@@ -85,7 +85,14 @@ function onJson(json) {
 
 
     const profileImage = document.createElement('img');
-    profileImage.src = json.immagine_profilo ? BASE_URL + 'img/' + json.immagine_profilo : BASE_URL + '/Media/Portrait_Placeholder.png';
+    if (json.categoria && json.categoria.toLowerCase() === 'caricamenti') {
+        profileImage.src = json.immagine_profilo;
+    } else {
+
+        profileImage.src = json.immagine_profilo ? BASE_URL + 'img/' + json.immagine_profilo : BASE_URL + '/Media/Portrait_Placeholder.png';
+    }
+
+
     profileImage.alt = `Foto profilo di ${json.name}`;
     profileImage.classList.add('author-img');
 
@@ -134,9 +141,9 @@ function onJson(json) {
         postDiv.appendChild(category);
     }
 
-    if (json.categoria && json.categoria.toLowerCase() === 'caricamenti') {
-           coverImg.src = json.percorsoMedia;
-    } 
+    if(json.categoria && json.categoria.toLowerCase() === 'caricamenti') {
+        coverImg.src = mediaPath;
+    }
 
     const content = document.createElement('p');
     content.textContent = json.contenuto;

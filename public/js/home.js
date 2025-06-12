@@ -735,10 +735,15 @@ function onJsonPreferiti(json) {
 
         const imgProfile = document.createElement('img');
         imgProfile.alt = 'Immagine profilo canale';
-        imgProfile.src = post.autore.immagine && post.autore.immagine.immagine_profilo.trim() !== ''
-            ? BASE_IMG_URL + post.autore.immagine.immagine_profilo
-            : 'img/Media/Portrait_Placeholder.png';
-
+        if (post.autore.immagine) {
+            if (post.autore.immagine.immagine_profilo && post.autore.immagine.immagine_profilo.startsWith('https')) {
+                imgProfile.src = post.autore.immagine.immagine_profilo;
+            } else {
+                imgProfile.src = post.autore.immagine && post.autore.immagine.immagine_profilo.trim() !== ''
+                    ? BASE_IMG_URL + post.autore.immagine.immagine_profilo
+                    : 'img/Media/Portrait_Placeholder.png';
+            }
+        }
 
         imgProfile.classList.add('channel-pic');
         aProfile.appendChild(imgProfile);
