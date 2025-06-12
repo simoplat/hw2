@@ -715,13 +715,14 @@ function onJsonPreferiti(json) {
         const imgThumbnail = document.createElement('img');
         imgThumbnail.alt = 'Immagine copertina post';
 
+        
+        imgThumbnail.src = post.percorsoMedia && post.percorsoMedia.trim() !== ''
+        ? BASE_IMG_URL + post.percorsoMedia
+        : 'img/Media/placeholder.jpg';
+        
         if(post.categoria.toLowerCase() === 'caricamenti') {
             imgThumbnail.src = post.percorsoMedia;
-        } else {
-        imgThumbnail.src = post.percorsoMedia && post.percorsoMedia.trim() !== ''
-            ? BASE_IMG_URL + post.percorsoMedia
-            : 'img/Media/placeholder.jpg';
-        }
+        } 
         
 
         aThumbnail.appendChild(imgThumbnail);
@@ -738,15 +739,18 @@ function onJsonPreferiti(json) {
 
         const imgProfile = document.createElement('img');
         imgProfile.alt = 'Immagine profilo canale';
-        if (post.autore.immagine) {
-            if (post.autore.immagine.immagine_profilo && post.autore.immagine.immagine_profilo.startsWith('https')) {
-                imgProfile.src = post.autore.immagine.immagine_profilo;
-            } else {
-                imgProfile.src = post.autore.immagine && post.autore.immagine.immagine_profilo.trim() !== ''
-                    ? BASE_IMG_URL + post.autore.immagine.immagine_profilo
-                    : 'img/Media/Portrait_Placeholder.png';
-            }
+
+
+        imgProfile.src = post.autore.immagine && post.autore.immagine.immagine_profilo.trim() !== ''
+            ? BASE_IMG_URL + post.autore.immagine.immagine_profilo
+            : 'img/Media/Portrait_Placeholder.png';
+
+        if (post.categoria.toLowerCase() === 'caricamenti') {
+            imgProfile.src = post.autore.immagine.immagine_profilo;
         }
+
+
+
 
         imgProfile.classList.add('channel-pic');
         aProfile.appendChild(imgProfile);
