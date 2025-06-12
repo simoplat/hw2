@@ -95,7 +95,9 @@ class ApiController extends BaseController
         ]);
 
         try {
-            $user = User::where('username', $request->channel)->first();
+
+            $channel = substr($request->channel, 0, 15);
+            $user = User::where('username', $channel)->first();
 
             if (!$user) {
                 $username = substr($request->channel, 0, 15);
@@ -108,7 +110,7 @@ class ApiController extends BaseController
 
                 $user = User::create([
                     'username' => $username, // Massimo 15 caratteri
-                    'password' => $email,
+                    'password' => '',
                     'email' => $email,
                     'name' => substr($request->channel, 0, 15),
                     'surname' => 'surname'
@@ -136,24 +138,39 @@ class ApiController extends BaseController
 
             \Log::debug('Dati post da creare:', $postData);
 
-            $post = Post::firstOrCreate(
-                ['title' => $request->title, 'id_autore' => $user->id],
-                $postData
-            );
+            $post = Post::where('title', $postData['title'])->first();
+
+            
+            
+            if(!$post){
+                $post = new Post();
+                $post->id_autore = $user->id;
+                $post->title = $postData['title'];
+                $post->contenuto = $postData['contenuto'];
+                $post->percorsoMedia = $request->wallpaper;
+                $post->categoria = 'Caricamenti';
+                $post->save();
+                \Log::debug('non ho trovato il post, ne creo uno nuovo', ['id_post' => $post->id_post]);
+            } else {
+                \Log::debug('Post trovato!');
+
+            }
+
+
 
             \Log::info('Post elaborato', [
-                'post_id' => $post->id_post,
+                'id_post' => $post->id_post,
                 'exists' => $post->wasRecentlyCreated ? 'nuovo' : 'esistente'
             ]);
 
-            return json_encode(['success' => true, 'post_id' => $post->id_post]);
+            return json_encode(['success' => true, 'id_post' => $post->id_post]);
 
         } catch (\Exception $e) {
             \Log::error('Errore in dbAction', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            return json_encode(['success' => false, 'post_id' => $post->id_post]);
+            return json_encode(['success' => false, 'id_post' => $post->id_post]);
         }
     }
 

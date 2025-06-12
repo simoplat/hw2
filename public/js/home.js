@@ -275,6 +275,9 @@ function dataBaseAction(title, channel, wallpaper, description) {
 
 function onJsonDBAction(json) {
     if(json.success) {
+        window.location.href= 'post/' + encodeURIComponent(json.id_post);
+        console.log('Redirecting to: ', 'post/' + encodeURIComponent(json.id_post));
+
         console.log('Tutto ok');
     }
 
