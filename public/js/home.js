@@ -211,7 +211,7 @@ function onJsonYoutube(json) {
         divVideoContent.classList.add('cursor-pointer');
         let title = item.snippet.title;
         let channel = item.snippet.channelTitle;
-        let wallpaper = item.snippet.thumbnails.high.url;
+        let wallpaper = item.snippet.thumbnails.medium.url;
         let description = item.snippet.description;
         divVideoContent.setAttribute('data-title', title);
         divVideoContent.setAttribute('data-channel', channel);
