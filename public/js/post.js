@@ -92,6 +92,10 @@ function onJson(json) {
         profileImage.src = json.immagine_profilo ? BASE_URL + 'img/' + json.immagine_profilo : BASE_URL + '/Media/Portrait_Placeholder.png';
     }
 
+    if (json.immagine_profilo === ''){
+        console.log('Immagine NOOOOOOOO');
+        profileImage.src = BASE_URL + 'img/Media/Portrait_Placeholder.png';
+    }
 
     profileImage.alt = `Foto profilo di ${json.name}`;
     profileImage.classList.add('author-img');

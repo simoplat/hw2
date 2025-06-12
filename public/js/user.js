@@ -87,6 +87,9 @@ function onJson(json) {
         profPic.setAttribute('data-type', 'SET');
     }
 
+    if(json.profilo.immagine_profilo ===''){
+        profPic.src = BASE_URL + 'img/Media/Portrait_Placeholder.png';
+    }
 
 
     let coverPhoto = document.getElementById('cover-photo-id');

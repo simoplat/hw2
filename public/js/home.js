@@ -719,11 +719,11 @@ function onJsonPreferiti(json) {
         imgThumbnail.src = post.percorsoMedia && post.percorsoMedia.trim() !== ''
         ? BASE_IMG_URL + post.percorsoMedia
         : 'img/Media/placeholder.jpg';
-        
-        if(post.categoria.toLowerCase() === 'caricamenti') {
+
+        if (post.categoria.toLowerCase() === 'caricamenti') {
             imgThumbnail.src = post.percorsoMedia;
-        } 
-        
+        }
+
 
         aThumbnail.appendChild(imgThumbnail);
         divThumbnail.appendChild(aThumbnail);
@@ -740,13 +740,18 @@ function onJsonPreferiti(json) {
         const imgProfile = document.createElement('img');
         imgProfile.alt = 'Immagine profilo canale';
 
+        const profilo = post.autore.immagine?.immagine_profilo?.trim();
+        const isValidImage = profilo && profilo !== '';
 
-        imgProfile.src = post.autore.immagine && post.autore.immagine.immagine_profilo.trim() !== ''
-            ? BASE_IMG_URL + post.autore.immagine.immagine_profilo
-            : 'img/Media/Portrait_Placeholder.png';
+        if (isValidImage) {
+            imgProfile.src = profilo.startsWith('http') ? profilo : BASE_IMG_URL + profilo;
+        } else {
+            imgProfile.src = 'img/Media/Portrait_Placeholder.png';
+        }
 
-        if (post.categoria.toLowerCase() === 'caricamenti' || (post.autore.immagine && post.autore.immagine.immagine_profilo)) {
-            imgProfile.src = post.autore.immagine ? post.autore.immagine.immagine_profilo : imgProfile.src;
+
+        if (post.categoria.toLowerCase() === 'caricamenti' || isValidImage) {
+            console.log('CATEGORIA:', post.categoria.toLowerCase(), ',', imgProfile.src, ',', post.autore.username);
         }
 
 
