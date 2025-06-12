@@ -78,11 +78,16 @@ function onJson(json) {
     profileContent.appendChild(heading);
 
     let profPic = document.getElementById('profile-pic-id');
-    if (profPic && json.profilo) {
+
+    if (json.profilo.immagine_profilo && json.profilo.immagine_profilo.startsWith('https')) {
+        profPic.src = json.profilo.immagine_profilo;
+    } else if (profPic && json.profilo) {
         profPic.classList.add('profile-pic');
         profPic.src = BASE_URL + 'img/' + json.profilo.immagine_profilo;
         profPic.setAttribute('data-type', 'SET');
     }
+
+
 
     let coverPhoto = document.getElementById('cover-photo-id');
     if (coverPhoto && json.profilo) {

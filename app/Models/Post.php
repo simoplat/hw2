@@ -12,6 +12,8 @@ class Post extends Model
 
     protected $primaryKey = 'id_post';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'id_autore',
         'title',

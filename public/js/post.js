@@ -116,10 +116,9 @@ function onJson(json) {
 
     const mediaPath = json.percorsoMedia && json.percorsoMedia.trim() !== '' ? json.percorsoMedia : null;
 
+
     if (mediaPath) {
         coverImg.src = BASE_URL + 'img/' + mediaPath;
-
-
 
         cover.appendChild(coverImg);
     }
@@ -134,6 +133,10 @@ function onJson(json) {
         category.textContent = '#' + json.categoria;
         postDiv.appendChild(category);
     }
+
+    if (json.categoria && json.categoria.toLowerCase() === 'caricamenti') {
+           coverImg.src = json.percorsoMedia;
+    } 
 
     const content = document.createElement('p');
     content.textContent = json.contenuto;

@@ -277,6 +277,8 @@ function onJsonDBAction(json) {
     if(json.success) {
         console.log('Tutto ok');
     }
+
+    console.log(json);
 }
 
 function onResponse(response) {
@@ -426,7 +428,10 @@ function createChannelElement(channel) {
 
     const img = document.createElement('img');
     img.classList.add('channel-pic');
-    if (channel.immagine_profilo) {
+
+    if (channel.immagine_profilo && channel.immagine_profilo.startsWith('https')) {
+        img.src = channel.immagine_profilo;
+    } else if (channel.immagine_profilo) {
         img.src = BASE_IMG_URL + channel.immagine_profilo;
     } else {
         img.src = BASE_IMG_URL + 'Media/Portrait_Placeholder.png';
@@ -496,9 +501,19 @@ function onJsonHomeFeed(json) {
 
         const imgThumbnail = document.createElement('img');
         imgThumbnail.alt = 'Immagine copertina post';
-        imgThumbnail.src = (post.percorsoMedia && post.percorsoMedia.trim() !== '')
-            ? BASE_IMG_URL + post.percorsoMedia
-            : 'img/Media/placeholder.jpg';
+
+
+        if (divPost.getAttribute('data-categories') === 'caricamenti') {
+           imgThumbnail.src = post.percorsoMedia;
+
+        } else {
+            imgThumbnail.src = (post.percorsoMedia && post.percorsoMedia.trim() !== '')
+                ? BASE_IMG_URL + post.percorsoMedia
+                : 'img/Media/placeholder.jpg';
+
+        }
+
+
 
 
         aThumbnail.appendChild(imgThumbnail);
@@ -513,10 +528,13 @@ function onJsonHomeFeed(json) {
 
         const imgProfile = document.createElement('img');
         imgProfile.alt = 'Immagine profilo canale';
-        imgProfile.src = (post.immagine_profilo && post.immagine_profilo.trim() !== '')
-            ? BASE_IMG_URL + post.immagine_profilo
-            : 'img/Media/Portrait_Placeholder.png';
-
+        if (post.immagine_profilo && post.immagine_profilo.startsWith('https')) {
+            imgProfile.src = post.immagine_profilo;
+        } else {
+            imgProfile.src = (post.immagine_profilo && post.immagine_profilo.trim() !== '')
+                ? BASE_IMG_URL + post.immagine_profilo
+                : 'img/Media/Portrait_Placeholder.png';
+        }
 
 
         imgProfile.classList.add('channel-pic');
@@ -693,10 +711,15 @@ function onJsonPreferiti(json) {
 
         const imgThumbnail = document.createElement('img');
         imgThumbnail.alt = 'Immagine copertina post';
+
+        if(post.categoria.toLowerCase() === 'caricamenti') {
+            imgThumbnail.src = post.percorsoMedia;
+        } else {
         imgThumbnail.src = post.percorsoMedia && post.percorsoMedia.trim() !== ''
             ? BASE_IMG_URL + post.percorsoMedia
             : 'img/Media/placeholder.jpg';
-
+        }
+        
 
         aThumbnail.appendChild(imgThumbnail);
         divThumbnail.appendChild(aThumbnail);

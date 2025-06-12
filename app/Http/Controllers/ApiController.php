@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\ImmagineUtente;
 
 use Illuminate\Routing\Controller as BaseController;
 
@@ -78,47 +79,82 @@ class ApiController extends BaseController
 
     public function dbAction(Request $request)
     {
+        \Log::info('Inizio dbAction', ['session_user_id' => session("user_id")]);
+
         if (!session("user_id")) {
+            \Log::warning('Utente non loggato, redirect a login');
             return redirect("login");
         }
 
-        $title = $request->title;
-        $channel = $request->channel;
-        $wallpaper = $request->wallpaper;
-        $description = $request->description;
+        // Debug dati in input
+        \Log::debug('Dati ricevuti:', [
+            'title' => $request->title,
+            'channel' => $request->channel,
+            'wallpaper' => $request->wallpaper,
+            'description' => $request->description
+        ]);
 
+        try {
+            $user = User::where('username', $request->channel)->first();
 
-        // Check if user already exists
-        $user = User::where('username', $channel)->first();
-        if (!$user) {
-            $user = new User;
-            $user->username = $channel;
-            $user->password = 'password';
-            $user->email = 'email';
-            $user->name = $channel;
-            $user->surname = 'surname';
-            $user->save();
+            if (!$user) {
+                $username = substr($request->channel, 0, 15);
+                $email = strtolower(str_replace(' ', '', $request->channel)) . '@example.com';
+                \Log::info('Creazione nuovo utente', ['channel' => $request->channel]);
+
+                $avatarUrl = 'https://avatar.iran.liara.run/public/boy?username='.urlencode($username);
+
+               
+
+                $user = User::create([
+                    'username' => $username, // Massimo 15 caratteri
+                    'password' => $email,
+                    'email' => $email,
+                    'name' => substr($request->channel, 0, 15),
+                    'surname' => 'surname'
+                ]);
+                \Log::info('Utente creato', ['user_id' => $user->id]);
+
+                $immagineUtente = new ImmagineUtente();
+                $immagineUtente->id_utente = $user->id;
+                $immagineUtente->immagine_profilo = $avatarUrl;
+                $immagineUtente->save();
+
+            } else {
+                \Log::debug('Utente esistente trovato', ['user_id' => $user->id]);
+            }
+            
+
+            // Gestione post
+            $postData = [
+                'title' => substr($request->title, 0, 50),
+                'contenuto' => $request->description,
+                'percorsoMedia' => $request->wallpaper,
+                'categoria' => 'Caricamenti',
+                'id_autore' => $user->id
+            ];
+
+            \Log::debug('Dati post da creare:', $postData);
+
+            $post = Post::firstOrCreate(
+                ['title' => $request->title, 'id_autore' => $user->id],
+                $postData
+            );
+
+            \Log::info('Post elaborato', [
+                'post_id' => $post->id_post,
+                'exists' => $post->wasRecentlyCreated ? 'nuovo' : 'esistente'
+            ]);
+
+            return json_encode(['success' => true, 'post_id' => $post->id_post]);
+
+        } catch (\Exception $e) {
+            \Log::error('Errore in dbAction', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return json_encode(['success' => false, 'post_id' => $post->id_post]);
         }
-
-        // Check if post already exists for this user with the same title
-        $post = Post::where('title', $title)
-                ->where('id_autore', $user->id)
-                ->first();
-
-        if (!$post) {
-            $post = new Post;
-            $post->title = $title;
-            $post->contenuto = $description;
-            $post->percorsoMedia = $wallpaper;
-            $post->categoria = 'Caricamenti';
-            $post->id_autore = $user->id;
-            $post->save();
-        }
-
-
-        // Use the correct primary key field for Post
-        return redirect()->route('post.show', ['id_post' => $post->id ?? $post->id_post]);
-        
     }
 
 
