@@ -11,6 +11,9 @@ class User extends Model
     public $timestamps = false;
     protected $fillable = ['username', 'password', 'email', 'name', 'surname'];
 
+    protected $hidden = ['password', 'email','id'];
+
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'id_autore');
