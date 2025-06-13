@@ -129,7 +129,7 @@ footer {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 100px;
 }
 
 .footer-col strong {
@@ -152,6 +152,10 @@ footer {
   }
   #links.visible {
     display: flex;
+  }
+
+  .footer-container {
+    gap: 8px;
   }
 
 
