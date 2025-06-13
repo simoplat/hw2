@@ -43,6 +43,12 @@ if (buttonProfileMobile) {
 
 function toggleProfMenu() {
 
+    if (window.matchMedia('(max-width: 750px)').matches) {
+        let sidebarContent = document.querySelector('.left-sidebar');
+        if (!sidebarContent.classList.contains('hidden')) {
+            sidebarContent.classList.add('hidden');
+        }
+    }
 
     if (personalMenu.classList.contains('hidden')) {
         if (!notifyMenu.classList.contains('hidden')) {
@@ -460,10 +466,10 @@ function createChannelElement(channel) {
     button.appendChild(sidebarInside);
     sidebarDiv.appendChild(button);
 
-    // Inserisco il div dentro il <a>
+
     link.appendChild(sidebarDiv);
 
-    // Infine metto il <a> dentro il contenitore principale
+
     channelDivCreator.appendChild(link);
 }
 
@@ -738,7 +744,7 @@ function onJsonPreferiti(json) {
         const divInfo = document.createElement('div');
         divInfo.classList.add('video-info');
 
-        // Immagine profilo con <a>
+
         const aProfile = document.createElement('a');
         aProfile.href = `user/${encodeURIComponent(post.autore.username)}`;
         aProfile.dataset.channel = post.autore;
