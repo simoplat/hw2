@@ -208,9 +208,11 @@
         </div>
 
         <div class="mobile-navbar">
-            <button id="button-home-mobile">
-                    <img class="svg-white" src="{{ url('img/Media/home.svg')}}"/>
-            </button>
+            <a href="{{ url('/home') }}">
+                <button id="button-home-mobile">
+                        <img class="svg-white" src="{{ url('img/Media/home.svg')}}"/>
+                </button>
+            </a>
                 <button id="button-menu-mobile">
                     <img class="svg-white" src="{{ url('img/Media/library.svg')}}"/>
                 </button>

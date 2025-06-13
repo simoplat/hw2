@@ -248,6 +248,12 @@ header {
     display: none;
   }
 
+  .personal-menu{
+    position: fixed !important;
+    bottom: 0 !important;
+    height: auto !important;
+  }
+
   #search-form {
     display: flex;
     justify-content: flex-end;
@@ -285,6 +291,7 @@ header {
     border: none;
     justify-items: center;
     margin: 10px;
+    cursor: pointer;
   }
 
   .mobile-navbar img{
