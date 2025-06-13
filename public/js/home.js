@@ -589,7 +589,19 @@ function onJsonHomeFeed(json) {
     if (contentVIDEOLAYOUT.classList.contains('column')) {
         contentVIDEOLAYOUT.classList.remove('column');
     }
+
+    let categorieLinks = document.querySelectorAll('.categorie a');
+    
+    for (let i = 0; i < categorieLinks.length; i++) {
+        if (categorieLinks[i].getAttribute('data-categories') === 'tutti') {
+            categorieLinks[i].classList.add('active-button');
+        } else {
+            categorieLinks[i].classList.remove('active-button');
+        }
+    }
+
 }
+
 
 
 function fetchHomeContent() {
@@ -620,6 +632,8 @@ function onJsonCategories(json) {
     navContainer.appendChild(tutti);
 
     tutti.addEventListener('click', fetchHomeContent);
+
+
     console.log('Aggiunto link fisso: tutti');
 
     if (!json || json.length === 0) {
@@ -629,6 +643,8 @@ function onJsonCategories(json) {
     for (let i = 0; i < json.length; i++) {
         createCategoryLink(json[i], navContainer);
     }
+
+
 }
 
 function createCategoryLink(category, container) {
@@ -653,6 +669,7 @@ function filterByCategory(categoria) {
 
     const videoContent = document.querySelectorAll('.video-content');
 
+    
     for (let i = 0; i < videoContent.length; i++) {
         const video = videoContent[i];
         const videoCategory = video.getAttribute('data-categories');
@@ -666,6 +683,17 @@ function filterByCategory(categoria) {
             video.classList.remove('flex');
         }
     }
+    let categorieLinks = document.querySelectorAll('.categorie a');
+    
+    for (let i = 0; i < categorieLinks.length; i++) {
+        if (categorieLinks[i].getAttribute('data-categories') === categoria) {
+            console.log('Bottone :' + categoria);
+            categorieLinks[i].classList.add('active-button');
+        } else{
+            categorieLinks[i].classList.remove('active-button');
+        }
+    }
+
 }
 
 
