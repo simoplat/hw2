@@ -15,7 +15,13 @@ function toggleMenuSidebar() {
     if (sidebarContent.classList.contains('hidden')) {
         sidebarContent.classList.remove('hidden');
         layout.classList.remove('expand');
-        console.log('A'); //debug
+
+        let menu = document.querySelector('.personal-menu');
+
+        if (!menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+            console.log('A'); //debug
+        }
     } else {
         console.log('B'); //motivi di debug
         sidebarContent.classList.add('hidden');
