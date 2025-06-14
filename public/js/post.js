@@ -86,15 +86,20 @@ function onJson(json) {
 
     const profileImage = document.createElement('img');
     if (json.categoria && json.categoria.toLowerCase() === 'caricamenti') {
-        profileImage.src = json.immagine_profilo;
+        if (json.immagine_profilo && !json.immagine_profilo.startsWith('http')) {
+            profileImage.src = BASE_URL + '/img/' + json.immagine_profilo;
+            console.log('CASO 1');
+        } else {
+            profileImage.src = json.immagine_profilo;
+        }
     } else {
-
+        console.log('CASO 2');
         profileImage.src = json.immagine_profilo ? BASE_URL + 'img/' + json.immagine_profilo : BASE_URL + '/Media/Portrait_Placeholder.png';
     }
 
     if (json.immagine_profilo === ''){
-        console.log('Immagine NOOOOOOOO');
         profileImage.src = BASE_URL + 'img/Media/Portrait_Placeholder.png';
+        console.log('CASO 3');
     }
 
     profileImage.alt = `Foto profilo di ${json.name}`;

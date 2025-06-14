@@ -18,6 +18,7 @@
 <body>
     <div class="container">
         <header> 
+            <h1 class="hidden">{{ $username }}</h1>
             <nav class="navbar">
                 <div class="nav-left">
                     <button id="button-menu">

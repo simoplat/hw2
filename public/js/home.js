@@ -191,7 +191,7 @@ nascontiContenuti('channel');
 
 function onJsonYoutube(json) {
     console.log('JSON ricevuto');
-    
+
     const contentVIDEOLAYOUT = document.querySelector('.video-layout');
     const navCentral = document.querySelector('.nav-central');
     navCentral.classList.add('hidden');
@@ -348,6 +348,8 @@ function onJsonSpotifyPlaylist(json) {
     const newTitle = document.createElement('h1');
     newTitle.textContent = 'Playlists:';
     categorie.appendChild(newTitle);
+    const h1Username = document.querySelector('header h1.hidden');
+    console.log('Username:', h1Username.textContent);
 
     for (let i = 0; i < json.items.length; i++) {
         const item = json.items[i];
@@ -376,6 +378,15 @@ function onJsonSpotifyPlaylist(json) {
 
 
             contentVIDEOLAYOUT.appendChild(videoContent);
+
+            videoContent.addEventListener('click', function() {
+                dataBaseAction(
+                    item.name,
+                    h1Username.textContent,
+                    item.images[0]?.url || '',
+                    item.description || ('Ecco la mia playlist ' + item.name + ' su Spotify')
+                );
+            });
         }
     }
 
