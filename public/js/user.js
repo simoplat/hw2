@@ -33,19 +33,20 @@ function renderPost(post, container) {
     let postDiv = document.createElement('div');
     postDiv.classList.add('post');
 
-    let titleLink = document.createElement('a');
-    titleLink.textContent = post.title;
-    titleLink.href = getPostUrl(post.id_post);
-    titleLink.setAttribute('data-id', post.id_post);
+    let postLink = document.createElement('a');
+    postLink.href = getPostUrl(post.id_post);
+    postLink.setAttribute('data-id', post.id_post);
 
     let title = document.createElement('h4');
-    title.appendChild(titleLink);
+    title.textContent = post.title;
 
     let content = document.createElement('p');
     content.textContent = post.contenuto;
 
-    postDiv.appendChild(title);
-    postDiv.appendChild(content);
+    postLink.appendChild(title);
+    postLink.appendChild(content);
+
+    postDiv.appendChild(postLink);
     container.appendChild(postDiv);
 }
 
