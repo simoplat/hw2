@@ -191,7 +191,7 @@ nascontiContenuti('channel');
 
 function onJsonYoutube(json) {
     console.log('JSON ricevuto');
-    // Svuotiamo la libreria
+    
     const contentVIDEOLAYOUT = document.querySelector('.video-layout');
     const navCentral = document.querySelector('.nav-central');
     navCentral.classList.add('hidden');
@@ -212,7 +212,6 @@ function onJsonYoutube(json) {
 
 
 
-        //creo l'immagine e setto la sorgente
         let imgSource = item.snippet.thumbnails.medium.url;
         let imgElement = document.createElement('img');
         imgElement.src = imgSource;
