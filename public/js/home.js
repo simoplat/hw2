@@ -344,7 +344,7 @@ function onJsonSpotifyPlaylist(json) {
         existingH1.remove();
     }
 
-    //<h1> "Playlists:"
+
     const newTitle = document.createElement('h1');
     newTitle.textContent = 'Playlists:';
     categorie.appendChild(newTitle);
@@ -754,7 +754,7 @@ function onJsonPreferiti(json) {
         divPost.classList.add('video-content');
         divPost.setAttribute('data-categories', post.categoria.toLowerCase());
 
-        // THUMBNAIL con <a>
+  
         const divThumbnail = document.createElement('div');
         divThumbnail.classList.add('video-thumbnail');
 
@@ -778,7 +778,7 @@ function onJsonPreferiti(json) {
         aThumbnail.appendChild(imgThumbnail);
         divThumbnail.appendChild(aThumbnail);
 
-        // INFO
+        
         const divInfo = document.createElement('div');
         divInfo.classList.add('video-info');
 
