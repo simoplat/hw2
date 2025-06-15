@@ -59,7 +59,7 @@ class UserController extends BaseController
                 ];
             });
 
-        // Profilo con fallback immagine
+            
         $profilo = [
             'immagine_profilo' => $immagini->immagine_profilo ?? 'Media/Portrait_Placeholder.png',
             'immagine_copertina' => $immagini->immagine_copertina ?? 'Media/placeholder.jpg',

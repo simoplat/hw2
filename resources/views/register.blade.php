@@ -21,13 +21,16 @@
                 @csrf
                 @if ($error == 'empty-fields')
                 <section class="error"> Compila tutti i campi</section>
+                
                 @elseif ($error == 'bad_passwords')
                 <section class="error">Le password non corrispondono</section>
 
                 @elseif ( $error == 'username_existing')
+                <h1 class="hidden">username</h1>
                 <section class="error">L'username che hai scelto non è disponibile</section>
-
+                
                 @elseif ( $error == 'email_existing')
+                <h1 class="hidden">email</h1>
                 <section class="error">L'email è già stata usata</section>
                 @endif
 
@@ -46,12 +49,23 @@
                 </div>
                 <div class="username">
                     <label for='username'>Nome utente</label>
+                     @if ($error == 'username_existing')
+                    <input type='text' name='username' value=''>
+                    @else
                     <input type='text' name='username' value='{{ old("username") }}'>
+                    @endif
+
                     <div><img src="{{ url('img/Media/close.svg')}}" /><span>Nome utente non disponibile</span></div>
                 </div>
                 <div class="email">
                     <label for='email'>Email</label>
+                    @if( $error == 'email_existing')
+                    <input type='text' name='email' value=''>
+                    @else
                     <input type='text' name='email' value='{{ old("email") }}'>
+                    @endif
+                    
+
                     <div><img src="{{ url('img/Media/close.svg')}}" /><span>Indirizzo email non valido</span></div>
                 </div>
                 <div class="password">

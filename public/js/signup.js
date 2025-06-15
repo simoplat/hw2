@@ -93,9 +93,15 @@ function validaInput() {
         }
     }
 
-    const firstError = document.querySelector('.errorj input');
-    if (firstError) {
-        firstError.focus();
+    const errorElement = document.querySelector('h1.hidden');
+    if (errorElement && errorElement.textContent === 'username') {
+        console.log("Errore trovato: username");
+        document.querySelector('.username input').focus();
+        document.querySelector('.username input').parentNode.classList.add('errorj');
+    } else if( errorElement && errorElement.textContent === 'email') {
+        console.log("Errore trovato: email");
+        document.querySelector('.email input').focus();
+        document.querySelector('.email input').parentNode.classList.add('errorj');
     }
 }
 

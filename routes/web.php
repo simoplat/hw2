@@ -53,3 +53,8 @@ Route::post('dataBaseAction',[ApiController::class,'dbAction']);
 
 
 //API
+//cose da sistemare: fetchPost e aggiornaCommenti  --- POSTCONTROLLER
+
+//fetchChannelContent 
+
+//homeController
