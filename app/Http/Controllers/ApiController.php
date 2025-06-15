@@ -79,22 +79,13 @@ class ApiController extends BaseController
 
     public function dbAction(Request $request)
     {
-        \Log::info('Inizio dbAction', ['session_user_id' => session("user_id")]);
+        
 
         if (!session("user_id")) {
-            \Log::warning('Utente non loggato, redirect a login');
             return redirect("login");
         }
 
-        // Debug dati in input
-        \Log::debug('Dati ricevuti:', [
-            'title' => $request->title,
-            'channel' => $request->channel,
-            'wallpaper' => $request->wallpaper,
-            'description' => $request->description
-        ]);
 
-        try {
 
             $channel = substr($request->channel, 0, 15);
             $user = User::where('username', $channel)->first();
@@ -102,12 +93,10 @@ class ApiController extends BaseController
             if (!$user) {
                 $username = substr($request->channel, 0, 15);
                 $email = strtolower(str_replace(' ', '', $request->channel)) . '@example.com';
-                \Log::info('Creazione nuovo utente', ['channel' => $request->channel]);
 
                 $avatarUrl = 'https://avatar.iran.liara.run/public/boy?username='.urlencode($username);
 
                
-
                 $user = User::create([
                     'username' => $username, // Massimo 15 caratteri
                     'password' => '',
@@ -115,15 +104,13 @@ class ApiController extends BaseController
                     'name' => substr($request->channel, 0, 15),
                     'surname' => 'surname'
                 ]);
-                \Log::info('Utente creato', ['user_id' => $user->id]);
+
 
                 $immagineUtente = new ImmagineUtente();
                 $immagineUtente->id_utente = $user->id;
                 $immagineUtente->immagine_profilo = $avatarUrl;
                 $immagineUtente->save();
 
-            } else {
-                \Log::debug('Utente esistente trovato', ['user_id' => $user->id]);
             }
             
 
@@ -136,11 +123,10 @@ class ApiController extends BaseController
                 'id_autore' => $user->id
             ];
 
-            \Log::debug('Dati post da creare:', $postData);
+            
 
             $post = Post::where('title', $postData['title'])->first();
 
-            
             
             if(!$post){
                 $post = new Post();
@@ -150,28 +136,12 @@ class ApiController extends BaseController
                 $post->percorsoMedia = $request->wallpaper;
                 $post->categoria = 'Caricamenti';
                 $post->save();
-                \Log::debug('non ho trovato il post, ne creo uno nuovo', ['id_post' => $post->id_post]);
-            } else {
-                \Log::debug('Post trovato!');
+                
+            } 
 
-            }
-
-
-
-            \Log::info('Post elaborato', [
-                'id_post' => $post->id_post,
-                'exists' => $post->wasRecentlyCreated ? 'nuovo' : 'esistente'
-            ]);
-
+            
             return json_encode(['success' => true, 'id_post' => $post->id_post]);
 
-        } catch (\Exception $e) {
-            \Log::error('Errore in dbAction', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            return json_encode(['success' => false, 'id_post' => $post->id_post]);
-        }
     }
 
 

@@ -44,9 +44,9 @@ class PostController extends BaseController
         $userid = Session::get('user_id');
 
         $post = Post::with([
-            'autore.immagine', // autore con immagine profilo
+            'autore.immagine',
             'preferiti' => function ($query) use ($userid) {
-                $query->where('id_utente', $userid); // solo i preferiti di questo utente
+                $query->where('id_utente', $userid); 
             }
         ])
             ->where('id_post', $id_post)
@@ -59,7 +59,7 @@ class PostController extends BaseController
 
 
 
-        // JSON di risposta
+        
         return response()->json([
             'id_post' => $post->id_post,
             'title' => $post->title,

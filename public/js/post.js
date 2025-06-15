@@ -3,7 +3,6 @@ const id_post = postMeta.content;
 const meta_element = document.querySelector('meta[name="csrf-token"]');
 const csrf_token = meta_element.content;
 
-if (csrf_token) console.log('valore token' + csrf_token);
 
 function fetchPost() {
     if (!id_post) {

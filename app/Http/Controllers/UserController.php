@@ -39,12 +39,12 @@ class UserController extends BaseController
         if (!$user)
             return;
 
-        // Recupera l'immagine utente (con fallback)
+        
         $immagini = $user->immagine;
 
-        // Recupera i post dell’utente con info utente
+        
         $posts = $user->posts()
-            ->with(['autore']) // se necessario per username
+            ->with(['autore']) 
             ->orderByDesc('id_post')
             ->get()
             ->map(function ($post) {

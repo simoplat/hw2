@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `cache` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella hw2.cache: ~0 rows (circa)
+DELETE FROM `cache`;
 
 -- Dump della struttura di tabella hw2.cache_locks
 CREATE TABLE IF NOT EXISTS `cache_locks` (
@@ -38,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `cache_locks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella hw2.cache_locks: ~0 rows (circa)
+DELETE FROM `cache_locks`;
 
 -- Dump della struttura di tabella hw2.commenti
 CREATE TABLE IF NOT EXISTS `commenti` (
@@ -52,7 +54,8 @@ CREATE TABLE IF NOT EXISTS `commenti` (
   CONSTRAINT `commenti_ibfk_2` FOREIGN KEY (`id_autore`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella hw2.commenti: ~66 rows (circa)
+-- Dump dei dati della tabella hw2.commenti: ~57 rows (circa)
+DELETE FROM `commenti`;
 INSERT INTO `commenti` (`id_commento`, `id_post`, `id_autore`, `testo`) VALUES
 	(1, 2, 4, 'BEL POST! Continua cosi'),
 	(2, 2, 1, 'BRAVOOO'),
@@ -119,7 +122,9 @@ INSERT INTO `commenti` (`id_commento`, `id_post`, `id_autore`, `testo`) VALUES
 	(64, 36, 4, 'Ciaooo!'),
 	(65, 71, 4, 'ciaoo'),
 	(66, 72, 4, 'Doveva vincere !! o forse no'),
-	(67, 80, 4, 'Bellissimo il 3!');
+	(67, 80, 4, 'Bellissimo il 3!'),
+	(68, 72, 4, 'bella canzone'),
+	(69, 97, 4, 'Mi piace!');
 
 -- Dump della struttura di tabella hw2.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
@@ -135,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella hw2.failed_jobs: ~0 rows (circa)
+DELETE FROM `failed_jobs`;
 
 -- Dump della struttura di tabella hw2.immaginiutente
 CREATE TABLE IF NOT EXISTS `immaginiutente` (
@@ -145,7 +151,8 @@ CREATE TABLE IF NOT EXISTS `immaginiutente` (
   CONSTRAINT `immaginiutente_ibfk_1` FOREIGN KEY (`id_utente`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella hw2.immaginiutente: ~32 rows (circa)
+-- Dump dei dati della tabella hw2.immaginiutente: ~35 rows (circa)
+DELETE FROM `immaginiutente`;
 INSERT INTO `immaginiutente` (`id_utente`, `immagine_profilo`, `immagine_copertina`) VALUES
 	(1, 'Content/profile/pf1.jpg', 'Content/profile/pf1Background.jpg'),
 	(2, 'Content/profile/pf2.jpg', 'Content/profile/pf1Background.jpg'),
@@ -178,7 +185,11 @@ INSERT INTO `immaginiutente` (`id_utente`, `immagine_profilo`, `immagine_coperti
 	(80, 'https://avatar.iran.liara.run/public/boy?username=DC', NULL),
 	(81, 'https://avatar.iran.liara.run/public/boy?username=Marvel+Entertai', NULL),
 	(82, 'https://avatar.iran.liara.run/public/boy?username=Eleonora+Petrel', NULL),
-	(83, 'https://avatar.iran.liara.run/public/boy?username=DadoBax+-+Feel+', NULL);
+	(83, 'https://avatar.iran.liara.run/public/boy?username=DadoBax+-+Feel+', NULL),
+	(84, 'https://avatar.iran.liara.run/public/boy?username=MYGEMPICTURES', NULL),
+	(85, 'https://avatar.iran.liara.run/public/boy?username=Peaceful+Relaxa', NULL),
+	(86, 'https://avatar.iran.liara.run/public/boy?username=Scenic+Relaxati', NULL),
+	(87, 'https://avatar.iran.liara.run/public/boy?username=Around+The+Worl', NULL);
 
 -- Dump della struttura di tabella hw2.iscrizione
 CREATE TABLE IF NOT EXISTS `iscrizione` (
@@ -191,7 +202,8 @@ CREATE TABLE IF NOT EXISTS `iscrizione` (
   CONSTRAINT `CONSTRAINT_1` CHECK (`follower_id` <> `seguito_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella hw2.iscrizione: ~27 rows (circa)
+-- Dump dei dati della tabella hw2.iscrizione: ~28 rows (circa)
+DELETE FROM `iscrizione`;
 INSERT INTO `iscrizione` (`follower_id`, `seguito_id`) VALUES
 	(1, 2),
 	(1, 3),
@@ -207,7 +219,6 @@ INSERT INTO `iscrizione` (`follower_id`, `seguito_id`) VALUES
 	(4, 8),
 	(4, 46),
 	(4, 55),
-	(4, 56),
 	(4, 57),
 	(4, 58),
 	(4, 62),
@@ -215,6 +226,7 @@ INSERT INTO `iscrizione` (`follower_id`, `seguito_id`) VALUES
 	(4, 76),
 	(4, 79),
 	(4, 83),
+	(4, 84),
 	(7, 1),
 	(7, 2),
 	(7, 4),
@@ -235,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella hw2.jobs: ~0 rows (circa)
+DELETE FROM `jobs`;
 
 -- Dump della struttura di tabella hw2.job_batches
 CREATE TABLE IF NOT EXISTS `job_batches` (
@@ -252,6 +265,7 @@ CREATE TABLE IF NOT EXISTS `job_batches` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella hw2.job_batches: ~0 rows (circa)
+DELETE FROM `job_batches`;
 
 -- Dump della struttura di tabella hw2.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -261,7 +275,8 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella hw2.migrations: ~3 rows (circa)
+-- Dump dei dati della tabella hw2.migrations: ~2 rows (circa)
+DELETE FROM `migrations`;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '0001_01_01_000000_create_users_table', 1),
 	(2, '0001_01_01_000001_create_cache_table', 1),
@@ -276,6 +291,7 @@ CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella hw2.password_reset_tokens: ~0 rows (circa)
+DELETE FROM `password_reset_tokens`;
 
 -- Dump della struttura di tabella hw2.post
 CREATE TABLE IF NOT EXISTS `post` (
@@ -290,7 +306,8 @@ CREATE TABLE IF NOT EXISTS `post` (
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`id_autore`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella hw2.post: ~55 rows (circa)
+-- Dump dei dati della tabella hw2.post: ~60 rows (circa)
+DELETE FROM `post`;
 INSERT INTO `post` (`id_post`, `id_autore`, `title`, `contenuto`, `percorsoMedia`, `categoria`) VALUES
 	(1, 1, 'VIAGGIO a Londra', 'Appena tornati da Londra e siamo ancora pieni di emozioni! 🇬🇧\nTra pioggia leggera e cieli grigi, la città ha un fascino unico.\nAbbiamo camminato lungo il Tamigi,\nsalutato il Big Ben e fatto shopping a Camden.\nI pub storici, i musei gratuiti e i parchi immensi ci hanno conquistati.\nLa vista dalla London Eye è qualcosa che non si dimentica. 🎡\nOgni quartiere ha la sua anima, dal classico Notting Hill al moderno Shoreditch.\nAbbiamo assaggiato di tutto, dal fish & chips al curry più piccante.\nLondra è un mix perfetto tra storia e innovazione.\nPresto vi raccontiamo tutto per bene — stay tuned! 🖤', 'Content/background/Londra.jpg', 'Viaggi'),
 	(2, 1, 'COSA Fare a New YORK?', 'Appena tornati da un\'avventura incredibile a New York! 🗽\nAbbiamo camminato tra i grattacieli di Manhattan,\nassaporato street food a Brooklyn e respirato arte al MoMA.\nCentral Park in autunno è pura magia,\nmentre le luci di Times Square tolgono il fiato ogni volta. ✨\nAbbiamo scoperto angoli meno turistici e vissuto la città come veri newyorkesi.\nOgni quartiere ha un’anima diversa e unica.\nNon vediamo l’ora di raccontarvi tutto,\ncondividere foto, consigli e qualche sorpresa.\nLa Grande Mela ci ha davvero conquistati! 🍎', 'Content/background/Cosa-Fare-a-New-york-01.jpg', 'Viaggi'),
@@ -346,7 +363,14 @@ INSERT INTO `post` (`id_post`, `id_autore`, `title`, `contenuto`, `percorsoMedia
 	(77, 80, 'Superman | Tickets on Sale Now', 'On July 11, the entire world will look up. Get tickets now for #Superman - Only In Theaters and @IMAX “Superman,” DC Studios\' ...', 'https://i.ytimg.com/vi/nZTgJy8ym34/mqdefault.jpg', 'Caricamenti'),
 	(78, 81, 'Marvel Television&#39;s Ironheart | Official Trail', 'Watch the brand new trailer for Marvel Television\'s #Ironheart Don\'t miss the 3-episode premiere on June 24 at 6pm PT/ 9pm ET, ...', 'https://i.ytimg.com/vi/r6j-wSIqJJ0/mqdefault.jpg', 'Caricamenti'),
 	(79, 82, 'Tendenze primavera estate 2025! Non so se amo di p', 'Ecco un nuovo video sulle 10 tendenze più belle per vestire alla moda questo primavera estate 2025! Se vuoi vedere altri video: ...', 'https://i.ytimg.com/vi/sLAwypGtuZY/mqdefault.jpg', 'Caricamenti'),
-	(80, 83, 'FALLOUT Retrospettiva • La Serie di GDR ATOMICI ', 'Qui trovi key a prezzi scontati: https://www.instant-gaming.com/?igr=DadoBax Fallout è una serie di Giochi di Ruolo esplosiva, ...', 'https://i.ytimg.com/vi/CKPcDJ0cpT8/mqdefault.jpg', 'Caricamenti');
+	(80, 83, 'FALLOUT Retrospettiva • La Serie di GDR ATOMICI ', 'Qui trovi key a prezzi scontati: https://www.instant-gaming.com/?igr=DadoBax Fallout è una serie di Giochi di Ruolo esplosiva, ...', 'https://i.ytimg.com/vi/CKPcDJ0cpT8/mqdefault.jpg', 'Caricamenti'),
+	(81, 84, 'ONE DAY IN CATANIA (ITALY) | 4K 60FPS | A lively c', 'Catania, also called the "black city", is the second largest city in the region of Sicily after Palermo. A volcanic eruption in 1669 and ...', 'https://i.ytimg.com/vi/RhyJIQhULbk/mqdefault.jpg', 'Caricamenti'),
+	(97, 4, 'I\'m Spiderman', 'Ecco la mia playlist I\'m Spiderman su Spotify', 'https://image-cdn-fa.spotifycdn.com/image/ab67706c0000da84966c6fb65030d70060019c5a', 'Caricamenti'),
+	(98, 4, 'G(old)', 'Ecco la mia playlist G(old) su Spotify', 'https://mosaic.scdn.co/640/ab67616d00001e02587d2127f6fa5a9786480d36ab67616d00001e0270f7a1b35d5165c85b95a0e0ab67616d00001e02927530e44371f0bc1bb296d4ab67616d00001e02e8dd4db47e7177c63b0b7d53', 'Caricamenti'),
+	(99, 4, 'La mia playlist WEB PROGRAMMING', 'Ecco la mia playlist La mia playlist WEB PROGRAMMING su Spotify', 'https://mosaic.scdn.co/640/ab67616d00001e023395f3e809dfbc2b1101d464ab67616d00001e023c29e91ff6eaef48d451b43fab67616d00001e02aaa9d84415623c1e790cd07bab67616d00001e02c41f4e1133b0e6c5fcf58680', 'Caricamenti'),
+	(100, 85, 'PARIS, FRANCE 4K - Relaxing Music Along With Beaut', 'Paris was a universe whole and entire unto herself, hollowed and fashioned by history; so she seemed in this age of Napoleon III ...', 'https://i.ytimg.com/vi/wlYJSAd9qGI/mqdefault.jpg', 'Caricamenti'),
+	(101, 86, 'Hawaii 4K - Scenic Relaxation Film with Calming Mu', 'Hawaii is one of the world\'s most beautiful destinations. Enjoy this 4K visual journey across the Hawaiian island of Oahu. I hope ...', 'https://i.ytimg.com/vi/MxcJtLbIhvs/mqdefault.jpg', 'Caricamenti'),
+	(102, 87, 'San Francisco in 4K', 'From the majestic Golden Gate Bridge to the charming streets of Fisherman\'s Wharf, join us as we explore the diverse landscapes ...', 'https://i.ytimg.com/vi/h_ayZ-xcMd4/mqdefault.jpg', 'Caricamenti');
 
 -- Dump della struttura di tabella hw2.preferiti
 CREATE TABLE IF NOT EXISTS `preferiti` (
@@ -358,7 +382,8 @@ CREATE TABLE IF NOT EXISTS `preferiti` (
   CONSTRAINT `preferiti_ibfk_2` FOREIGN KEY (`id_post`) REFERENCES `post` (`id_post`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella hw2.preferiti: ~20 rows (circa)
+-- Dump dei dati della tabella hw2.preferiti: ~28 rows (circa)
+DELETE FROM `preferiti`;
 INSERT INTO `preferiti` (`id_utente`, `id_post`) VALUES
 	(1, 3),
 	(4, 1),
@@ -366,6 +391,7 @@ INSERT INTO `preferiti` (`id_utente`, `id_post`) VALUES
 	(4, 19),
 	(4, 20),
 	(4, 24),
+	(4, 25),
 	(4, 37),
 	(4, 43),
 	(4, 44),
@@ -379,7 +405,12 @@ INSERT INTO `preferiti` (`id_utente`, `id_post`) VALUES
 	(4, 77),
 	(4, 78),
 	(4, 79),
-	(4, 80);
+	(4, 80),
+	(4, 81),
+	(4, 98),
+	(4, 100),
+	(4, 101),
+	(4, 102);
 
 -- Dump della struttura di tabella hw2.sessions
 CREATE TABLE IF NOT EXISTS `sessions` (
@@ -395,8 +426,9 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella hw2.sessions: ~1 rows (circa)
+DELETE FROM `sessions`;
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-	('enQE0n8M8XkcHhppudJB7b3UhEY9ipLIRKlDBj1T', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZUF2M2dvc0RFWkhRU2hqSVBOV2V6NE9PZDE2dDY1VWhkc3c5QW12RiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDM6Imh0dHA6Ly9sb2NhbGhvc3QvaHcyL3B1YmxpYy9mZXRjaENhdGVnb3JpZXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjc6InVzZXJfaWQiO2k6NDt9', 1749831632);
+	('7nFzWqpTYh5EUsrlXIzYUKkQdrdKHogruGWOkOzS', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTm5JTkE0VzJ0T1hpcENIY2pUVjF6UDNKM1hmOVBpczk3QldRbVZESiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3QvaHcyL3B1YmxpYy9mZXRjaEhvbWVDb250ZW50Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo3OiJ1c2VyX2lkIjtpOjQ7fQ==', 1749995524);
 
 -- Dump della struttura di tabella hw2.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -411,7 +443,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dump dei dati della tabella hw2.users: ~37 rows (circa)
+-- Dump dei dati della tabella hw2.users: ~39 rows (circa)
+DELETE FROM `users`;
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `name`, `surname`) VALUES
 	(1, 'pippo', '$2y$10$e1A7ohI6L0vohc0Ll8qwQOPZIa86nwy/WKscSVDVz5HLBSAdCytJW', 'sdadsadas@gmail.com', 'Pippo', 'Rossi'),
 	(2, 'pluto', '$2y$10$tBYnG6t9CT6LeEMRbrYXD.h9h.TXR3rHnKTT4HmvCbRfAYsseCSC.', 'saddas@gmail.com', 'PLUTO', 'BIANCHI'),
@@ -449,7 +482,11 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `name`, `surname`) V
 	(80, 'DC', '', 'dc@example.com', 'DC', 'surname'),
 	(81, 'Marvel Entertai', '', 'marvelentertainment@example.com', 'Marvel Entertai', 'surname'),
 	(82, 'Eleonora Petrel', '', 'eleonorapetrella@example.com', 'Eleonora Petrel', 'surname'),
-	(83, 'DadoBax - Feel ', '', 'dadobax-feelthevideogames@example.com', 'DadoBax - Feel ', 'surname');
+	(83, 'DadoBax - Feel ', '', 'dadobax-feelthevideogames@example.com', 'DadoBax - Feel ', 'surname'),
+	(84, 'MYGEMPICTURES', '', 'mygempictures@example.com', 'MYGEMPICTURES', 'surname'),
+	(85, 'Peaceful Relaxa', '', 'peacefulrelaxation4k@example.com', 'Peaceful Relaxa', 'surname'),
+	(86, 'Scenic Relaxati', '', 'scenicrelaxation@example.com', 'Scenic Relaxati', 'surname'),
+	(87, 'Around The Worl', '', 'aroundtheworld4k@example.com', 'Around The Worl', 'surname');
 
 -- Dump della struttura di tabella hw2.users_old
 CREATE TABLE IF NOT EXISTS `users_old` (
@@ -466,6 +503,7 @@ CREATE TABLE IF NOT EXISTS `users_old` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dump dei dati della tabella hw2.users_old: ~0 rows (circa)
+DELETE FROM `users_old`;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
