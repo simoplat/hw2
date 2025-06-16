@@ -552,7 +552,7 @@ function onJsonHomeFeed(json) {
         aProfile.dataset.channel = post.canale;
 
         const imgProfile = document.createElement('img');
-        imgProfile.alt = 'Immagine profilo canale';
+        imgProfile.alt = 'Immagine';
         if (post.immagine_profilo && post.immagine_profilo.startsWith('https')) {
             imgProfile.src = post.immagine_profilo;
         } else {
@@ -788,7 +788,7 @@ function onJsonPreferiti(json) {
         aProfile.dataset.channel = post.autore;
 
         const imgProfile = document.createElement('img');
-        imgProfile.alt = 'Immagine profilo canale';
+        imgProfile.alt = 'Img';
 
         const profilo = post.autore.immagine?.immagine_profilo?.trim();
         const isValidImage = profilo && profilo !== '';

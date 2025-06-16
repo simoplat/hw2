@@ -419,6 +419,7 @@ header {
   text-overflow: ellipsis;
   width: 300px;
   height: 80px;
+  padding: 5px;
 }
 
 .video-info h1 {
