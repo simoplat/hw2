@@ -59,6 +59,7 @@ function onjson(json) {
             if (errorElement) {
                 errorElement.textContent = "Email già esistente";
                 errorElement.parentNode.classList.add('errorj');
+                document.querySelector('.email').classList.add('errorj');
                 formStatus.email = false; 
             }
         } else if (json.type === 'username') {
@@ -66,6 +67,7 @@ function onjson(json) {
             if (errorElement) {
                 errorElement.textContent = "Username già esistente";
                 errorElement.parentNode.classList.add('errorj');
+                document.querySelector('.username').classList.add('errorj');
                 formStatus.username = false;
             }
         }
