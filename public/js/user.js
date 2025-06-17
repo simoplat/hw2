@@ -103,6 +103,7 @@ function onJson(json) {
     if (!json.post || json.post.length === 0) {
         let noPosts = document.createElement('p');
         noPosts.textContent = 'Nessun post trovato.';
+        noPosts.id="noContent";
         profileContent.appendChild(noPosts);
         return;
     }
