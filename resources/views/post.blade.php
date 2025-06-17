@@ -29,7 +29,7 @@
     <div class="blog-container">
         <!-- Titolo sopra la copertina -->
         <div class="header-title">
-            <h1 class="post-title">Titolo del Post del Blog</h1>
+            <h1 class="post-title"> {{ $title }}</h1>
         </div>
 
         <!-- Copertina -->

@@ -26,7 +26,10 @@ class PostController extends BaseController
         if (!$post) {
             abort(404);
         }
-        return view('post')->with('id_post', $id_post);
+        return view('post')->with([
+            'id_post'=> $id_post,
+            'title' => $post->title
+        ]);
     }
 
     public function fetchPost($id_post)

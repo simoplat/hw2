@@ -23,7 +23,7 @@ function Onresponse(response) {
 
 function onJson(json) {
     const postContent = document.getElementById('post-content');
-    const titleContainer = document.querySelector('.header-title');
+  //const titleContainer = document.querySelector('.header-title');
     const author = document.querySelector('.author');
     const authorNameElem = document.querySelector('.author-name');
     const authorUsernameElem = document.querySelector('.author-username');
@@ -53,27 +53,27 @@ function onJson(json) {
 
     if (preferitoBtn) preferitoBtn.addEventListener('click', togglePreferito);
 
-    if (!postContent || !titleContainer || !authorNameElem || !authorUsernameElem || !author) {
+    if (!postContent || !authorNameElem || !authorUsernameElem || !author) {
         console.error('Contenitori mancanti nel DOM');
         return;
     }
 
 
     postContent.innerHTML = '';
-    titleContainer.innerHTML = '';
+    // titleContainer.innerHTML = '';
     cover.innerHTML = '';
 
     if (!json || json.error) {
-        const h1 = document.createElement('h1');
+/*         const h1 = document.createElement('h1');
         h1.textContent = 'Nessun post';
-        titleContainer.appendChild(h1);
+        titleContainer.appendChild(h1); */
         return;
     }
 
-    const postTitle = document.createElement('h1');
+    /* const postTitle = document.createElement('h1');
     postTitle.classList.add('post-title');
     postTitle.textContent = json.title;
-    titleContainer.appendChild(postTitle);
+    titleContainer.appendChild(postTitle); */
 
 
     author.innerHTML = '';
