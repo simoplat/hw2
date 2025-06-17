@@ -1,3 +1,6 @@
+const meta_element = document.querySelector('meta[name="csrf-token"');
+const csrf_token = meta_element.content;
+
 const formStatus = {
     name: false,
     surname: false,
@@ -20,17 +23,90 @@ function checkUsername(event) {
     const input = event.currentTarget || event;
     const regex = /^[a-zA-Z0-9_]{1,15}$/;
     const isValid = regex.test(input.value);
+
+    const data = new FormData();
+    data.append('username', input.value);
+    console.log(input.value);
+    data.append('_token', csrf_token);
+    if (isValid) {
+        console.log('Faccio la fetch '+ input.value);
+        fetch('checkUsername', {
+            method: 'POST',
+            body: data,
+        }).then(onResponse).then(onjson);
+    }
+
     const errorSpan = input.parentNode.querySelector('span');
+    errorSpan.id = "errorUsername";
     errorSpan.textContent = isValid ? "" : "Sono ammesse lettere, numeri e underscore. Max. 15";
     formStatus.username = isValid;
     input.parentNode.classList.toggle('errorj', !isValid);
+}
+
+function onResponse(response) {
+    if (!response.ok) {
+        return null;
+    }
+    return response.json();
+}
+
+function onjson(json) {
+    if (!json) return;
+
+    if (json.exists) {
+        if (json.type === 'email') {
+            const errorElement = document.getElementById('errorEmail');
+            if (errorElement) {
+                errorElement.textContent = "Email già esistente";
+                errorElement.parentNode.classList.add('errorj');
+                formStatus.email = false; 
+            }
+        } else if (json.type === 'username') {
+            const errorElement = document.getElementById('errorUsername'); 
+            if (errorElement) {
+                errorElement.textContent = "Username già esistente";
+                errorElement.parentNode.classList.add('errorj');
+                formStatus.username = false;
+            }
+        }
+    } else {
+        if (json.type === 'email') {
+            const errorElement = document.getElementById('errorEmail');
+            if (errorElement) {
+                errorElement.textContent = "";
+                errorElement.parentNode.classList.remove('errorj');
+                formStatus.email = true;
+            }
+        } else if (json.type === 'username') {
+            const errorElement = document.getElementById('errorUsername');
+            if (errorElement) {
+                errorElement.textContent = "";
+                errorElement.parentNode.classList.remove('errorj');
+                formStatus.username = true;
+            }
+        }
+    }
 }
 
 function checkEmail(event) {
     const input = event.currentTarget || event;
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const isValid = regex.test(String(input.value).toLowerCase());
+
+    const data = new FormData();
+    data.append('email', input.value);
+    data.append('_token', csrf_token);
+    if (isValid) {
+        console.log('Faccio la fetch '+ input.value);
+        fetch('checkEmail', {
+            method: 'POST',
+            body: data,
+        }).then(onResponse).then(onjson);
+    }
+    
+
     const errorSpan = input.parentNode.querySelector('span');
+    errorSpan.id= "errorEmail";
     errorSpan.textContent = isValid ? "" : "Email non valida";
     formStatus.email = isValid;
     input.parentNode.classList.toggle('errorj', !isValid);
@@ -105,4 +181,4 @@ function validaInput() {
     }
 }
 
-window.addEventListener('DOMContentLoaded', validaInput);
+validaInput();

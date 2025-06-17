@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -50,11 +51,7 @@ Route::post('toggleIscritto',[UserController::class,'toggleIscritto']);
 Route::post('togglePreferito',[PostController::class,'togglePreferito']);
 Route::post('aggiungiCommento',[PostController::class,'aggiungiCommento']);
 Route::post('dataBaseAction',[ApiController::class,'dbAction']);
+Route::post('checkEmail',[LoginController::class,'checkEmail']);
+Route::post('checkUsername',[LoginController::class,'checkUsername']);
 
 
-//API
-//cose da sistemare: fetchPost e aggiornaCommenti  --- POSTCONTROLLER
-
-//fetchChannelContent 
-
-//homeController

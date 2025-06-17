@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class LoginController extends BaseController
 {
@@ -91,5 +92,32 @@ class LoginController extends BaseController
         Session::flush();
         return redirect('index');
     }
+
+
+    public function checkEmail(Request $request)
+    {
+        $email = $request->email;
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            return response()->json(['exists' => true, 'type' => 'email']);
+        } else {
+            return response()->json(['exists' => false, 'type' => 'email']);
+        }
+    }
+
+    public function checkUsername(Request $request)
+    {
+        $username = $request->username;
+        $user = User::where('username', $username)->first();
+
+        if ($user) {
+            return response()->json(['exists' => true, 'type' => 'username']);
+        } else {
+            return response()->json(['exists' => false, 'type' => 'username']);
+        }
+    }
+
 }
+
 
