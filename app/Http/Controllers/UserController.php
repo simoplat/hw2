@@ -20,11 +20,34 @@ class UserController extends BaseController
             return redirect('login');
         }
 
-        $user = User::where('username', $username)->first();
-        if (!$user) {
+        $loggedUser = User::find(Session::get('user_id'));
+        if (!$loggedUser) {
+            abort(403);
+        }
+
+        $targetUser = User::where('username', $username)->first();
+        if (!$targetUser) {
             abort(404);
         }
-        return view('User')->with('channel', $username);
+
+        if ($targetUser->id === $loggedUser->id) {
+            return view('user')->with([
+                'channel' => $targetUser->username,
+                'isFollowing' => 'TeStesso',
+                'name' => $targetUser->name ?? '',
+                'surname' => $targetUser->surname ?? '',
+            ]);
+        }
+
+        $isFollowing = $loggedUser->seguiti()->where('users.id', $targetUser->id)->exists();
+
+        return view('user')->with([
+            'channel' => $targetUser->username,
+            'isFollowing' => $isFollowing,
+            'name' => $targetUser->name ?? '',
+            'surname' => $targetUser->surname ?? '',
+        ]);
+
     }
 
     public function fetchChannelContent($channel)
@@ -39,12 +62,12 @@ class UserController extends BaseController
         if (!$user)
             return;
 
-        
+
         $immagini = $user->immagine;
 
-        
+
         $posts = $user->posts()
-            ->with(['autore']) 
+            ->with(['autore'])
             ->orderByDesc('id_post')
             ->get()
             ->map(function ($post) {
@@ -59,7 +82,7 @@ class UserController extends BaseController
                 ];
             });
 
-            
+
         $profilo = [
             'immagine_profilo' => $immagini->immagine_profilo ?? 'Media/Portrait_Placeholder.png',
             'immagine_copertina' => $immagini->immagine_copertina ?? 'Media/placeholder.jpg',
@@ -75,7 +98,7 @@ class UserController extends BaseController
 
     }
 
-    public function checkChannel(Request $request)
+    /* public function checkChannel(Request $request)
     {
         if (!session('user_id')) {
             return redirect('login');
@@ -103,7 +126,7 @@ class UserController extends BaseController
 
         return response()->json(['iscritto' => $isFollowing]);
     }
-
+ */
 
     public function toggleIscritto(Request $request)
     {
@@ -111,12 +134,12 @@ class UserController extends BaseController
         if (!session('user_id')) {
             return redirect('login');
         }
-        
+
         $user = User::find(Session::get('user_id'));
-        
+
         $targetUsername = $request->user;
-        
-       
+
+
         if (!$targetUsername) {
             return response()->json(['error' => 'Username del canale non fornito'], 400);
         }

@@ -36,16 +36,27 @@
                         <div class="user-details">
                             
                             <!-- elementi da aggiungere dinamicamente -->
+                             <h2 id="username">{{ $name . ' ' . $surname }}</h2>
+                             <p id="user-tag">{{'@'. $channel }}</p>
 
 
 
                         </div>
                     </div>
                 </div>
-
-                <button class="btn-iscrizione" data-set="no">
-                    <span id="isc-text" class="btn-text">Iscriviti al canale</span>
-                </button>
+                        
+                        @if ($isFollowing === 'TeStesso')
+                            
+                        @elseif ($isFollowing)
+                            <button class="btn-iscrizione" data-set="no">
+                                <span id="isc-text" class="btn-text">Disicriviti al canale</span>
+                            </button>
+                        @else
+                            <button class="btn-iscrizione" data-set="no">
+                                <span id="isc-text" class="btn-text">Iscriviti al canale</span>
+                            </button>
+                        @endif
+                        
 
                 <div id="profile-content">
                     <!-- <h3>Post recenti</h3>

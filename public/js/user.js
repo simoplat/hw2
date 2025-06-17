@@ -54,7 +54,7 @@ function onJson(json) {
     let profileContent = document.getElementById('profile-content');
     profileContent.innerHTML = '';
 
-    if (json.profilo && json.profilo.name && json.profilo.surname) {
+    /* if (json.profilo && json.profilo.name && json.profilo.surname) {
         let userDetails = document.querySelector('.user-details');
         userDetails.innerHTML = '';
 
@@ -72,7 +72,7 @@ function onJson(json) {
 
         userDetails.appendChild(nameElem);
         userDetails.appendChild(usernameElem);
-    }
+    } */
 
     let heading = document.createElement('h3');
     heading.textContent = 'Post recenti';
@@ -159,7 +159,7 @@ function updateIscrittoUI(json) {
 
 }
 
-checkIscritto();
+/* checkIscritto();
 
 function checkIscritto() {
     
@@ -174,10 +174,10 @@ function checkIscritto() {
         method: 'POST',
         body: formDataCheckIscritto
     }).then(Onresponse).then(handleIscritto);
-}
+} */
 
 
-function handleIscritto(json) {
+/* function handleIscritto(json) {
     if (json === true || json.iscritto === true) {
         console.log("Iscritto? true");
         const iscTxt = document.getElementById('isc-text');
@@ -196,4 +196,4 @@ function handleIscritto(json) {
         console.log("Non puoi iscriverti al tuo stesso canale");
         iscrivitiBtn.classList.add('hidden');
     }
-}
+} */
