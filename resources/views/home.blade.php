@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>hw1</title>
+    <title>hw2</title>
     <script>
         const BASE_URL = "{{ url('/') }}/";
     </script>
