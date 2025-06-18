@@ -214,6 +214,7 @@ a:hover {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-left: 4px solid #cc0000;
+  position: relative;
 }
 
 .post:hover {
@@ -331,6 +332,21 @@ footer {
 .hidden {
   display: none;
 }
+
+
+.post button {
+  right: 0px;
+  background-color: #e70101;
+  color:white;
+  border: 0px;
+  border-radius:20px;
+  padding: 8px;
+  cursor: pointer;
+  position: absolute;
+  right: 50px;
+}
+
+
 
 @media (max-width: 750px) {
   .profile-header {

@@ -79,6 +79,7 @@ class UserController extends BaseController
                     'percorsoMedia' => $post->percorsoMedia,
                     'categoria' => $post->categoria,
                     'username' => $post->user->username ?? '',
+                    'elimina' => $post->id_autore === session('user_id'),
                 ];
             });
 
@@ -166,4 +167,29 @@ class UserController extends BaseController
             return response()->json(['iscritto' => true]);
         }
     }
+
+
+    public function deletePost($id_post)
+    {
+        if (!session('user_id')) {
+            return redirect('login');
+        }
+
+        $post = Post::where('id_post', $id_post)
+            ->where('id_autore', session('user_id'))
+            ->first();
+
+        if (!$post) {
+            return response()->json(['error' => 'Post non trovato'], 404);
+        }
+
+        if ($post->id_autore !== session('user_id')) {
+            return response()->json(['error' => 'Non hai i permessi per eliminare questo post'], 403);
+        }
+
+        $post->delete();
+
+        return response()->json(['success' => true]);
+    }
+
 }

@@ -28,6 +28,21 @@ function fetchChannelContent() {
         .then(onJson);
 }
 
+function onJsonDeletePost(json) {
+    if (json.error) {
+        console.error('Errore durante l\'eliminazione del post:', json);
+        return;
+    } else console.log('Post eliminato con successo:', json);
+    fetchChannelContent();
+}
+
+function eliminaPost(event) {
+    const postId = event.target.dataset.postId;
+    console.log('Elimina post ' + postId);
+    fetch(BASE_URL + 'deletePost/' + encodeURIComponent(postId))
+        .then(Onresponse)
+        .then(onJsonDeletePost);
+}
 
 function renderPost(post, container) {
     let postDiv = document.createElement('div');
@@ -46,8 +61,18 @@ function renderPost(post, container) {
     postLink.appendChild(title);
     postLink.appendChild(content);
 
+    
+    if(post.elimina) {
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Elimina Post'; 
+        deleteBtn.dataset.postId = post.id_post;
+        deleteBtn.addEventListener('click', eliminaPost);
+        postDiv.appendChild(deleteBtn);
+    }
+
     postDiv.appendChild(postLink);
     container.appendChild(postDiv);
+
 }
 
 function onJson(json) {
