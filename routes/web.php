@@ -44,7 +44,8 @@ Route::get('fetchPost/{id_post}', [PostController::class, 'fetchPost'])->name('p
 Route::get('fetchPreferiti',[HomeController::class,'fetchPreferiti']);
 Route::get('fetchCommenti/{id_post}',[PostController::class,'aggiornaCommenti']);
 Route::get('spotify',[ApiController::class,'spotifyAPI']);
-Route::post('youtubeAPI',[ApiController::class,'youtubeAPI']);
+Route::get('rimuoviCommento/{id_commento}', [PostController::class, 'rimuoviCommento']);
+Route::post('youtubeAPI', [ApiController::class, 'youtubeAPI'])->name('youtube.api');
 //POST
 Route::post('checkChannel',[UserController::class,'checkChannel']);
 Route::post('toggleIscritto',[UserController::class,'toggleIscritto']);

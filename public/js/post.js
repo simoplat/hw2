@@ -181,6 +181,22 @@ function aggiornaCommenti() {
         then(onJsonCommenti);
 }
 
+function onJsonRimuoviCommento(json) {
+    if (!json) return;
+    if(!json.error){
+        console.log('Commento rimosso con successo');
+        aggiornaCommenti();
+    } else cpnsole.error('Errore nella rimozione del commento:', json.error);
+}
+
+function rimuoviCommento(event) {
+    const id_commento = event.currentTarget.dataset.id;
+    console.log('Rimuovo commento con ID:', id_commento);
+    fetch(BASE_URL + 'rimuoviCommento/' + encodeURIComponent(id_commento))
+        .then(Onresponse)
+        .then(onJsonRimuoviCommento);
+}
+
 
 function onJsonCommenti(json) {
     if (!json) return;
@@ -209,6 +225,14 @@ function onJsonCommenti(json) {
 
         commentDiv.appendChild(p);
         commentSection.appendChild(commentDiv);
+        if(commento.remove) {
+            const removeBtn = document.createElement('button');
+            removeBtn.classList.add('remove-comment');
+            removeBtn.textContent = 'Rimuovi';
+            removeBtn.dataset.id = commento.id_commento;
+            removeBtn.addEventListener('click',rimuoviCommento);
+            commentDiv.appendChild(removeBtn);
+        }
     }
 }
 

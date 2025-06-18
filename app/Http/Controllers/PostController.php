@@ -95,10 +95,13 @@ class PostController extends BaseController
             ->get(['id_commento', 'id_autore', 'testo']);
 
 
+
         $formattedComments = $comments->map(function ($comment) {
             return [
                 'username' => $comment->autore->username,
-                'testo' => $comment->testo
+                'testo' => $comment->testo,
+                'id_commento' => $comment->id_commento,
+                'remove' => $comment->id_autore == Session::get('user_id') ? true : false
             ];
         });
 
@@ -148,6 +151,25 @@ class PostController extends BaseController
         $commento->save();
         return response()->json(['success'=> true]);
         
+    }
+
+    public function rimuoviCommento($id_commento)
+    {
+
+        if (!session('user_id')) {
+            return redirect('login');
+        }
+
+       $commento = Commento::where('id_commento', $id_commento)
+                  ->where('id_autore', Session::get('user_id'))
+                  ->first();
+
+        if (!$commento) {
+            return response()->json(['error' => 'Commento non trovato'], 404);
+        }
+
+        $commento->delete();
+        return response()->json(['success' => true]);
     }
 
 
