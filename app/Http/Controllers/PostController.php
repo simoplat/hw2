@@ -46,13 +46,7 @@ class PostController extends BaseController
 
         $userid = Session::get('user_id');
 
-        $post = Post::with([
-            'autore.immagine',
-            'preferiti' => function ($query) use ($userid) {
-                $query->where('id_utente', $userid); 
-            }
-        ])
-            ->where('id_post', $id_post)
+        $post = Post::where('id_post', $id_post)
             ->first();
 
 
@@ -85,12 +79,7 @@ class PostController extends BaseController
             return redirect('login');
         }
 
-        $comments = Commento::with([
-            'autore' => function ($query) {
-                $query->select('id', 'username');
-            }
-        ])
-            ->where('id_post', $id_post)
+        $comments = Commento::where('id_post', $id_post)
             ->orderBy('id_commento', 'DESC')
             ->get(['id_commento', 'id_autore', 'testo']);
 
